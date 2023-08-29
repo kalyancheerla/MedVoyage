@@ -11,3 +11,4 @@ A SE group project...
 |Emmie Abels| EmmieAbels@my.unt.edu | @[Emmie8](https://github.com/Emmie8) | @emmieabels1 |
 |Demir Altay| demir.altay@my.unt.edu | @[daltay15](https://github.com/daltay15) | @demiraltay|
 |Bhavani Rachakatla| BhavaniRachakatla@my.unt.edu | @[bhavani-rachakatla](https://github.com/bhavani-rachakatla) | @bhavani_rachakatla|
+|Pravallika Bollavaram| PravallikaBollavaram@my.unt.edu | @[PravallikaBollavaram](https://github.com/PravallikaBollavaram) | @bollavarampravallika|
