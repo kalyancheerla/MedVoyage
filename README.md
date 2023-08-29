@@ -6,3 +6,4 @@ A SE group project...
 |---------|------|--------|--------------|---------|
 |Kalyan Cheerla| 11646764| KalyanCheerla@my.unt.edu | @[kalyancheerla](https://github.com/kalyancheerla) | @kalyancheerla |
 |Yasmeen Haleem| 11462753| yasmeenhaleem@my.unt.edu | @[yasmeenha](https://github.com/yasmeenha) | @yasmeenha |
+|Vidhi Bhatt| do we need to provide this?| vidhibhatt@my.unt.edu |@[aceattorney](https://github.com/aceattorney666) |@vidhi_bhatt|
