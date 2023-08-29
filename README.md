@@ -1,4 +1,4 @@
-# SE_5430_Group_project
+# Squad8 project
 A SE group project...
 
 ### Contributors:
