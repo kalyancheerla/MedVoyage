@@ -1,0 +1,5 @@
+* Files submitted for Deliverable 1:
+
+    - Report :-                     docs/final-reports/Deliverable 1 Report.pdf
+    - Power Point presentation :-   docs/planning-artifacts/Project Proposal.pptx
+    - Presentation Video :-         docs/planning-artifacts/Project Proposal Recording for Deliverable 1.mp4

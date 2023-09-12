@@ -1,0 +1,14 @@
+* Squad8 project - MedVoyage:
+Repo contains the project implementation for the Squad8 team's MedVoyage repository.
+
+- Description:
+    Helping out healthcare scheduling with our mobile-first and user-friendly Clinic Booking system, connecting patients and doctors seamlessly.
+
+- Directory Structure:
+    /configs                    - directory for configuration files
+    /docs                       - Documents related to project
+    /docs/meeting-minutes       - Meeting minutes for recorded weekly and ad-hoc group meetings
+    /docs/final-reports         - Final deliverable reports for the project
+    /docs/planning-artifacts    - Project designs and planning documents
+    /test                       - Test cases from testing suites
+    /tools                      - Utility scripts and other custom tools
