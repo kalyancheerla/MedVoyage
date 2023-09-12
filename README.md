@@ -12,6 +12,7 @@ Helping out healthcare scheduling with our mobile-first and user-friendly Clinic
 | [/docs/meeting-minutes](./docs/meeting-minutes) | Meeting minutes for recorded weekly and ad-hoc group meetings |
 | [/docs/final-reports](./docs/final-reports) | Final deliverable reports for the project |
 | [/docs/planning-artifacts](./docs/planning-artifacts) | Project designs and planning documents |
+| [/src](./src) | Project source code |
 | [/test](./test) | Test cases from testing suites |
 | [/tools](./tools) | Utility scripts and other custom tools |
 
