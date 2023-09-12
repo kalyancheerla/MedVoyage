@@ -4,7 +4,16 @@ Repo contains the project implementation for the Squad8 team's MedVoyage reposit
 ### Description:
 Helping out healthcare scheduling with our mobile-first and user-friendly Clinic Booking system, connecting patients and doctors seamlessly.
 
-### Directory Structure
+### Directory Structure:
+| Directory | Information |
+| --------- | ----------- |
+| [/configs](./configs) | directory for configuration files |
+| [/docs](./docs) | Documents related to project |
+| [/docs/meeting-minutes](./docs/meeting-minutes) | Meeting minutes for recorded weekly and ad-hoc group meetings |
+| [/docs/final-reports](./docs/final-reports) | Final deliverable reports for the project |
+| [/docs/planning-artifacts](./docs/planning-artifacts) | Project designs and planning documents |
+| [/test](./test) | Test cases from testing suites |
+| [/tools](./tools) | Utility scripts and other custom tools |
 
 ### Contributors:
 |Full Name|Email ID|GitHub User ID|Trello ID|
