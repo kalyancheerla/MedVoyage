@@ -1,5 +1,10 @@
-# Squad8 project
-A SE group project...
+# Squad8 project - MedVoyage:
+Repo contains the project implementation for the Squad8 team's MedVoyage repository.
+
+### Description:
+Helping out healthcare scheduling with our mobile-first and user-friendly Clinic Booking system, connecting patients and doctors seamlessly.
+
+### Directory Structure
 
 ### Contributors:
 |Full Name|Email ID|GitHub User ID|Trello ID|
