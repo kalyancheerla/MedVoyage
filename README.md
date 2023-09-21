@@ -7,7 +7,7 @@ Helping out healthcare scheduling with our mobile-first and user-friendly Clinic
 ### Directory Structure:
 | Directory | Information |
 | --------- | ----------- |
-| [/configs](./configs) | directory for configuration files |
+| [/configs](./configs) | Directory for configuration files |
 | [/docs](./docs) | Documents related to project |
 | [/docs/meeting-minutes](./docs/meeting-minutes) | Meeting minutes for recorded weekly and ad-hoc group meetings |
 | [/docs/final-reports](./docs/final-reports) | Final deliverable reports for the project |
