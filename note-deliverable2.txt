@@ -1,1 +1,8 @@
+* Files submitted for Deliverable 2:
 
+    - Report :-                     docs/final-reports/Deliverable 2 Report.pdf
+
+* Other artifacts:
+    
+    - GANTT chart :-                docs/planning-artifacts/Deliverable 2 GANTT.png
+    - System Diagram :-             docs/planning-artifacts/Detailed MedVoyage System Diagram.vsdx
