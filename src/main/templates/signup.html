@@ -1,0 +1,99 @@
+<!-- myapp/templates/signup.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        /* Define a CSS variable for the default button color */
+        :root {
+            --button-color: #19bd60; /* Default button color */
+        }
+
+        /* Define a CSS variable for the button color when hovered */
+        :root {
+            --button-hover-color: #14924a; /* Button color when hovered */
+        }
+
+        /* Apply the default button color */
+        .btn-primary {
+            background-color: var(--button-color);
+        }
+
+        /* Change the button color when hovered */
+        .btn-primary:hover {
+            background-color: var(--button-hover-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Sign Up</h2>
+                        <form id="signup-form" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="{{ form.username.id_for_label }}">Username</label>
+                                <input type="text" class="form-control form-control-lg" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" placeholder="JohnDoe">
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                                <input type="email" class="form-control form-control-lg" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" placeholder="john@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                                <input type="text" class="form-control form-control-lg" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" placeholder="John">
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                                <input type="text" class="form-control form-control-lg" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" placeholder="Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.date_of_birth.id_for_label }}">Date Of Birth</label>
+                                <input type="date" class="form-control form-control-lg" id="{{ form.date_of_birth.id_for_label }}" name="{{ form.date_of_birth.name }}" placeholder="Enter your date of birth">
+                            </div>                            
+                            <div class="form-group">
+                                <label for="{{ form.password1.id_for_label }}">Password</label>
+                                <input type="password" class="form-control form-control-lg" id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" placeholder="Enter your password">
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                                <input type="password" class="form-control form-control-lg" id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" placeholder="Confirm your password">
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-block" onclick="submitForm()">Sign Up</button>
+                            <div class="text-center">
+                                <a href="/login">Already have an account? Login Here</a>
+                            </div>
+    
+                            {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error:</strong> Please correct the following errors.
+                                <ul>
+                                    {% for error in form.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitForm() {
+            // Get the form element
+            const form = document.getElementById('signup-form');
+            
+            // Submit the form
+            form.submit();
+        }
+    </script>
+</body>
+</html>
