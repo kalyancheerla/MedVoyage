@@ -1,0 +1,31 @@
+<!-- TEMPORARY FILE FOR SIGN UP PAGE. FEATURE IS BEING DEVELOPED ON A DIFFERENT BRANCH. CURRENT PAGE CONTENT IS FROM THE navbar.html FILE -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Brand Logo and Name -->
+    <a class="navbar-brand" href="#">
+        {% load static %}
+        <img src={% static "images/MedVoyageLogo.png" %} width="30" height="30" class="d-inline-block align-top" alt="Logo">
+        MedVoyage
+    </a>
+
+    <!-- Toggler for Mobile Devices -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse me-lg-3" id="navbarNav">
+        <ul class="navbar-nav ms-lg-auto">
+            <!-- About and Contact Links -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+            <!-- Login/Signup Button -->
+            <li class="nav-item">
+                <a href="/signup" class="nav-link fw-bold text-mv-green">Login/Signup</a>
+            </li>
+        </ul>
+    </div>
+</nav>
