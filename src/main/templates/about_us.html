@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+
+{% block title %}MedVoyage | About Us{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Page Heading -->
+    <h1 class="mb-4">About Us</h1>
+
+    <!-- Application Description -->
+    <section class="mb-5">
+        <h2>Med Voyage: Your Online Clinic Appointment Booking Partner</h2>
+        <p>
+            Med Voyage is a cutting-edge online appointment booking platform that connects patients with healthcare providers. With just a few clicks, you can schedule your clinical appointments at your convenience, without any hassle. Our mission is to simplify healthcare access and bring it right to your fingertips.
+        </p>
+    </section>
+
+    <!-- Features -->
+    <section class="mb-5">
+        <h2>Features</h2>
+        <ul>
+            <li>Easy appointment booking</li>
+            <li>Wide network of healthcare providers</li>
+            <li>Secure and private</li>
+            <li>User-friendly interface</li>
+            <li>24/7 customer support</li>
+        </ul>
+    </section>
+
+    <!-- Dev Team -->
+    <section class="mb-5">
+        <h2>Meet the Team</h2>
+        <div class="row">
+            <!-- Team member 1 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    {% load static %}
+                    <img src="{% static 'Profile_picture.png' %}" class="card-img-top" alt="Team Member 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Kalyan Cheerla</h5>
+                        <p class="card-text">Project Manager</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team member 2 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    {% load static %}
+                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Bhavani Rachakatla</h5>
+                        <p class="card-text">Design and Testing Lead</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team member 3 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    {% load static %}
+                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Yasmeen Haleem</h5>
+                        <p class="card-text">Requirements and Documentation Lead</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Team member 4 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    {% load static %}
+                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Vidhi Bhatt</h5>
+                        <p class="card-text">Implementation Lead(front end)</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Team member 5 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    {% load static %}
+                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Emmie Abels</h5>
+                        <p class="card-text">Implementation Lead(front end)</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Team member 6 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    {% load static %}
+                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Demir Altay</h5>
+                        <p class="card-text">Implementation Lead(backend)</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Team member 7 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    {% load static %}
+                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Manushree Buyya/h5>
+                        <p class="card-text">Demo and Presentation Lead</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Team member 8 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    {% load static %}
+                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Pravallika Bollavaram</h5>
+                        <p class="card-text">Configuration Management Lead</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
