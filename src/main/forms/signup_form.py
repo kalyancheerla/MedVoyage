@@ -1,12 +1,26 @@
-# forms.py
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+from django.db import models
 
-class SignUpForm(forms.Form):
-    username = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    first_name = forms.CharField(max_length=100)
-    last_name = forms.CharField(max_length=100)
-    date_of_birth = forms.DateField()
-    # password = forms.CharField(widget=forms.PasswordInput, min_length=2)  # Change min_length to your desired minimum length
-    # confirm_password = forms.CharField(widget=forms.PasswordInput, min_length=2)  # Change min_length to your desired minimum length
-    
+User = get_user_model()
+
+class SignUpForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'password', 'password2']
+
+        error_messages = {
+            'username': {
+                'unique': 'A user with that username already exists.'
+            },
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("password2")
+
+        if password != confirm_password:
+            self.add_error('password2', "Passwords do not match. Please enter matching passwords.")
+

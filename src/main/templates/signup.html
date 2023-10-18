@@ -73,10 +73,14 @@
         
                                 {% if form.errors %}
                                 <div class="alert alert-danger">
-                                    <strong>Error:</strong> Please correct the following errors.
+                                    <strong>Error:</strong> Please correct the following errors:
                                     <ul>
-                                        {% for error in form.errors %}
-                                            <li>{{ error }}</li>
+                                        {% for field, errors in form.errors.items %}
+                                            <li><strong>{{ field|title }}:</strong>
+                                                {% for error in errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </li>
                                         {% endfor %}
                                     </ul>
                                 </div>
