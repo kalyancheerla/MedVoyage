@@ -7,7 +7,7 @@ class SignupForm(forms.ModelForm):
 
     class Meta:
         model = PatientModel
-        fields = ('username', 'email', 'phone', 'password')
+        fields = ('username', 'first_name', 'last_name', 'email', 'phone', 'password')
 
     def clean_password2(self):
         cd = self.cleaned_data

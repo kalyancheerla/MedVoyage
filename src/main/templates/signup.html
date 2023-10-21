@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <h2>Register</h2>
+    <h2>Sign-Up</h2>
     <form method="post">
         {% csrf_token %}
 
@@ -12,6 +12,26 @@
             {% if form.username.errors %}
                 <div class="alert alert-danger">
                     {{ form.username.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_first_name">First Name:</label>
+            <input type="text" name="first_name" class="form-control" id="id_first_name" placeholder="Enter First Name" value="{{ form.first_name.value }}">
+            {% if form.first_name.errors %}
+                <div class="alert alert-danger">
+                    {{ form.first_name.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_last_name">Last Name:</label>
+            <input type="text" name="last_name" class="form-control" id="id_last_name" placeholder="Enter Last Name" value="{{ form.last_name.value }}">
+            {% if form.last_name.errors %}
+                <div class="alert alert-danger">
+                    {{ form.last_name.errors }}
                 </div>
             {% endif %}
         </div>
@@ -56,7 +76,7 @@
             {% endif %}
         </div>
 
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary mt-3">Sign-Up</button>
     </form>
 </div>
 {% endblock %}
