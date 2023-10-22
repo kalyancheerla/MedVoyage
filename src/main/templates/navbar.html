@@ -26,6 +26,12 @@
             <li class="nav-item">
                 <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
             </li>
+            <!-- Sign Out Button -->
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a href="/signout" class="nav-link" > Sign Out</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

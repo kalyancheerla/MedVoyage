@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from .forms import SignupForm, LoginForm
+from django.contrib.auth import logout
 
 def home(request):
     return render(request, "index.html")
@@ -59,3 +60,8 @@ def contact_us_form_submit(request):
         # For now, just redirecting to the same contact us page
         return redirect('contact_us')
     return render(request, 'contact_us.html')
+
+def signout(request):
+    logout(request)
+    return redirect(home)
+    
