@@ -6,7 +6,7 @@
     <form method="post">
         {% csrf_token %}
 
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="id_username">Username:</label>
             <input type="text" name="username" class="form-control" id="id_username" placeholder="Enter username" required value="{{ form.username.value }}">
             {% if form.username.errors %}
@@ -16,7 +16,7 @@
             {% endif %}
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="id_first_name">First Name:</label>
             <input type="text" name="first_name" class="form-control" id="id_first_name" placeholder="Enter First Name" value="{{ form.first_name.value }}">
             {% if form.first_name.errors %}
@@ -26,7 +26,7 @@
             {% endif %}
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="id_last_name">Last Name:</label>
             <input type="text" name="last_name" class="form-control" id="id_last_name" placeholder="Enter Last Name" value="{{ form.last_name.value }}">
             {% if form.last_name.errors %}
@@ -36,7 +36,7 @@
             {% endif %}
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="id_email">Email:</label>
             <input type="email" name="email" class="form-control" id="id_email" placeholder="Enter email" required value="{{ form.email.value }}">
             {% if form.email.errors %}
@@ -46,7 +46,7 @@
             {% endif %}
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="id_phone">Phone:</label>
             <input type="text" name="phone" class="form-control" id="id_phone" placeholder="Enter phone number" value="{{ form.phone.value }}">
             {% if form.phone.errors %}
@@ -56,7 +56,7 @@
             {% endif %}
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="id_password">Password:</label>
             <input type="password" name="password" class="form-control" id="id_password" placeholder="Enter password" required>
             {% if form.password.errors %}
@@ -66,9 +66,9 @@
             {% endif %}
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="id_password2">Confirm Password:</label>
-            <input type="password" name="password2" class="form-control" id="id_password2" placeholder="Confirm password" required>
+            <input type="password" name="password2" class="form-control col-md-8" id="id_password2" placeholder="Confirm password" required>
             {% if form.password2.errors %}
                 <div class="alert alert-danger">
                     {{ form.password2.errors }}
@@ -78,7 +78,7 @@
 
         {{ form.login_type }}
 
-        <button type="submit" class="btn btn-primary mt-3">Sign-Up</button>
+        <button type="submit" class="btn btn-primary col-mt-3 mx-auto">Sign-Up</button>
     </form>
 </div>
 {% endblock %}
