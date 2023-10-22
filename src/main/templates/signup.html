@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <h2>Sign-Up</h2>
+<div class="container mx-auto">
+    <h2 class="text-center">Sign-Up</h2>
     <form method="post">
         {% csrf_token %}
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 mx-auto mt-2">
             <label for="id_username">Username:</label>
-            <input type="text" name="username" class="form-control" id="id_username" placeholder="Enter username" required value="{{ form.username.value }}">
+            <input type="text" name="username" class="form-control" id="id_username" placeholder="JohnDoe" required value="{{ form.username.value|default:'' }}">
             {% if form.username.errors %}
                 <div class="alert alert-danger">
                     {{ form.username.errors }}
@@ -16,9 +16,9 @@
             {% endif %}
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 mx-auto mt-2">
             <label for="id_first_name">First Name:</label>
-            <input type="text" name="first_name" class="form-control" id="id_first_name" placeholder="Enter First Name" value="{{ form.first_name.value }}">
+            <input type="text" name="first_name" class="form-control" id="id_first_name" placeholder="John" value="{{ form.first_name.value|default:'' }}">
             {% if form.first_name.errors %}
                 <div class="alert alert-danger">
                     {{ form.first_name.errors }}
@@ -26,9 +26,9 @@
             {% endif %}
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 mx-auto mt-2">
             <label for="id_last_name">Last Name:</label>
-            <input type="text" name="last_name" class="form-control" id="id_last_name" placeholder="Enter Last Name" value="{{ form.last_name.value }}">
+            <input type="text" name="last_name" class="form-control" id="id_last_name" placeholder="Doe" value="{{ form.last_name.value|default:'' }}">
             {% if form.last_name.errors %}
                 <div class="alert alert-danger">
                     {{ form.last_name.errors }}
@@ -36,9 +36,9 @@
             {% endif %}
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 mx-auto mt-2">
             <label for="id_email">Email:</label>
-            <input type="email" name="email" class="form-control" id="id_email" placeholder="Enter email" required value="{{ form.email.value }}">
+            <input type="email" name="email" class="form-control" id="id_email" placeholder="John@email.com" required value="{{ form.email.value|default:'' }}">
             {% if form.email.errors %}
                 <div class="alert alert-danger">
                     {{ form.email.errors }}
@@ -46,9 +46,9 @@
             {% endif %}
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 mx-auto mt-2">
             <label for="id_phone">Phone:</label>
-            <input type="text" name="phone" class="form-control" id="id_phone" placeholder="Enter phone number" value="{{ form.phone.value }}">
+            <input type="text" name="phone" class="form-control" id="id_phone" placeholder="555-555-5555" value="{{ form.phone.value|default:'' }}">
             {% if form.phone.errors %}
                 <div class="alert alert-danger">
                     {{ form.phone.errors }}
@@ -66,7 +66,7 @@
             {% endif %}
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 mx-auto mt-2">
             <label for="id_password">Password:</label>
             <input type="password" name="password" class="form-control" id="id_password" placeholder="Enter password" required>
             {% if form.password.errors %}
@@ -76,7 +76,7 @@
             {% endif %}
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 mx-auto mt-2">
             <label for="id_password2">Confirm Password:</label>
             <input type="password" name="password2" class="form-control col-md-8" id="id_password2" placeholder="Confirm password" required>
             {% if form.password2.errors %}
@@ -86,9 +86,14 @@
             {% endif %}
         </div>
 
-        {{ form.login_type }}
+        <div class="form-group col-md-6 mx-auto mt-2">
+            {{ form.login_type|safe }}
+        </div>
 
-        <button type="submit" class="btn btn-primary col-mt-3 mx-auto">Sign-Up</button>
+        <div class="form-group col-md-6 mx-auto mt-2">
+            <button type="submit" class="btn btn-primary col-mt-3 mx-auto">Sign-Up</button>
+        </div>
+        
     </form>
 </div>
 {% endblock %}
