@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}MedVoyage | About Us{% endblock %}
+
+{% block content %}
+<!-- About Us Intro -->
+<section class="py-5">
+  <div class="container text-center">
+    <h1>About Us</h1>
+    <p style="text-align: justify;">
+      Looking for a hassle-free, efficient, and seamless healthcare access experience? Look no further than MedVoyage - the ultimate online appointment booking system designed to simplify and expedite the appointment process for patients and healthcare professionals. With MedVoyage, you can enjoy tailored doctor selections based on your preferences, ensuring you get the best possible care. What's more, our web-based application guarantees secure personal data protection, so you can rest easy knowing your information is safe. Revolutionize your healthcare access with MedVoyage - Sign Up today and experience unparalleled convenience and efficiency.
+    </p>
+  </div>
+</section>
+
+<!-- Developers Info -->
+<section class="bg-light py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Meet the Developers</h2>
+    <div class="row">
+      <!-- Loop through developers -->
+      {% for developer in developers %}
+      <div class="col-md-4 mb-3">
+        <div class="card h-100 border-0 shadow-sm">
+          {% load static %}
+          <img src="{% static developer.image|stringformat:'s' %}" class="card-img-top rounded-circle mx-auto d-block" alt="{{ developer.name }}" style="width:60%; object-fit: cover;">
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ developer.name }}</h5>
+            <p class="card-text">{{ developer.bio }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+
