@@ -6,7 +6,56 @@
           crossorigin="anonymous">
     {% load static %}
     <link href={% static "css/main.css" %} rel="stylesheet"/>
+    <style>
+      body {
+          background-color: #f8f9fa; /* Setting a background color */
+      }
+      /* General Styles */
+      .container {
+          font-family: 'Arial', sans-serif;
+      }
+
+      h1, h2, h5 {
+          color: #333;
+      }
+
+      p {
+          line-height: 1.6;
+      }
+
+      /* Card Styles */
+      .card {
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+      }
+
+      .card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      .card-img-top {
+          width: 50%;
+          height: 200px;
+          object-fit: cover;
+      }
+
+      .card-body {
+          background-color: #f9f9f9;
+          padding: 20px;
+          text-align: center;
+      }
+
+    </style>
     <title>{% block title %}MedVoyage Home{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
   </head>
 
   <body>
@@ -16,5 +65,8 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous">
     </script>
+    <!-- Bootstrap and Popper.js scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -1,128 +1,80 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block title %}MedVoyage | About Us{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <!-- Page Heading -->
-    <h1 class="mb-4">About Us</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us</title>
+  <!-- Add Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 
-    <!-- Application Description -->
-    <section class="mb-5">
-        <h2>Med Voyage: Your Online Clinic Appointment Booking Partner</h2>
-        <p>
-            Med Voyage is a cutting-edge online appointment booking platform that connects patients with healthcare providers. With just a few clicks, you can schedule your clinical appointments at your convenience, without any hassle. Our mission is to simplify healthcare access and bring it right to your fingertips.
-        </p>
-    </section>
+  <!-- About Us Intro -->
+  <section class="py-5">
+    <div class="container text-center">
+      <h1>About Us</h1>
+      <p style="text-align: justify;">
+        Looking for a hassle-free, efficient, and seamless healthcare access experience? Look no further than MedVoyage - the ultimate online appointment booking system designed to simplify and expedite the appointment process for patients and healthcare professionals. With MedVoyage, you can enjoy tailored doctor selections based on your preferences, ensuring you get the best possible care. What's more, our web-based application guarantees secure personal data protection, so you can rest easy knowing your information is safe. Revolutionize your healthcare access with MedVoyage - Sign Up today and experience unparalleled convenience and efficiency.
+      </p>
+    </div>
+  </section>
 
-    <!-- Features -->
-    <section class="mb-5">
-        <h2>Features</h2>
-        <ul>
-            <li>Easy appointment booking</li>
-            <li>Wide network of healthcare providers</li>
-            <li>Secure and private</li>
-            <li>User-friendly interface</li>
-            <li>24/7 customer support</li>
-        </ul>
-    </section>
-
-    <!-- Dev Team -->
-    <section class="mb-5">
-        <h2>Meet the Team</h2>
-        <div class="row">
-            <!-- Team member 1 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
-                    {% load static %}
-                    <img src="{% static 'Profile_picture.png' %}" class="card-img-top" alt="Team Member 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Kalyan Cheerla</h5>
-                        <p class="card-text">Project Manager</p>
-                    </div>
-                </div>
+  <!-- Developers Info 
+  <section class="bg-light py-5">
+    <div class="container">
+      <h2 class="text-center">Meet the Developers</h2>
+      <div class="row">
+         Loop through developers 
+        {% for developer in developers %}
+        <div class="col-md-4">
+          <div class="card">
+            <img src="{% static developer.image|stringformat:'s' %}" class="card-img-top" alt="{{ developer.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ developer.name }}</h5>
+              <p class="card-text">{{ developer.bio }}</p>
             </div>
-
-            <!-- Team member 2 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
-                    {% load static %}
-                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Bhavani Rachakatla</h5>
-                        <p class="card-text">Design and Testing Lead</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Team member 3 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
-                    {% load static %}
-                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Yasmeen Haleem</h5>
-                        <p class="card-text">Requirements and Documentation Lead</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Team member 4 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
-                    {% load static %}
-                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Vidhi Bhatt</h5>
-                        <p class="card-text">Implementation Lead(front end)</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Team member 5 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
-                    {% load static %}
-                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Emmie Abels</h5>
-                        <p class="card-text">Implementation Lead(front end)</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Team member 6 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
-                    {% load static %}
-                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Demir Altay</h5>
-                        <p class="card-text">Implementation Lead(backend)</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Team member 7 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
-                    {% load static %}
-                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Manushree Buyya/h5>
-                        <p class="card-text">Demo and Presentation Lead</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Team member 8 -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card">
-                    {% load static %}
-                    <img src="{% static 'images/Profile_picture.png' %}" class="card-img-top" alt="Team Member 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Pravallika Bollavaram</h5>
-                        <p class="card-text">Configuration Management Lead</p>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </section>
-</div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+-->
+
+<!-- Developers Info -->
+<section class="bg-light py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Meet the Developers</h2>
+    <div class="row">
+      <!-- Loop through developers -->
+      {% for developer in developers %}
+      <div class="col-md-4 mb-3">
+        <div class="card h-100 border-0 shadow-sm">
+          <img src="{% static developer.image|stringformat:'s' %}" class="card-img-top rounded-circle mx-auto d-block" alt="{{ developer.name }}" style="width:60%; object-fit: cover;">
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ developer.name }}</h5>
+            <p class="card-text">{{ developer.bio }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+  <!-- Add Bootstrap and jQuery JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
 {% endblock %}
+
