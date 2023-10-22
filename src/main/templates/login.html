@@ -10,20 +10,21 @@
                     <div class="card-body">
                         <h2 class="card-title text-center">Login</h2>
                         <form id="login-form" method="post">
+                            {% csrf_token %}
                             <div class="form-group">
-                                <label for="{{form.username.id_for_label}}">Username</label>
-                                <input type="text" class="form-control form-control-lg" id="{{form.username.id_for_label}}" name="{{form.username.name}}" placeholder="JohnDoe">
+                                <label for="id_username">Username</label>
+                                <input type="text" class="form-control form-control-lg" id="id_username" name="username" placeholder="JohnDoe">
                             </div>
 
                             <div>
-                                <label for="{{form.password.id_for_label}}">Password</label>
-                                <input type="password" class="form-control form-control-lg" id="{{form.password.id_for_label}}" name="{{form.password.name}}" placeholder="Enter your password">
+                                <label for="id_password">Password</label>
+                                <input type="password" class="form-control form-control-lg" id="id_password" name="password" placeholder="Enter your password">
                             </div>
 
-                            <button type="button" class="btn btn-primary btn-block text-center" onclick="submitForm()">Login</button>
+                            <button type="submit" class="btn btn-primary btn-block text-center">Login</button>
                             
                             <div class="text-center">
-                                <a href="/signup">Don't have an account? Sign Up Here</a>
+                                <a href="{% url 'signup' %}">Don't have an account? Sign Up Here</a>
                             </div>
                         </form>
                     </div>
