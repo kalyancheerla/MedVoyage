@@ -5,3 +5,44 @@
 .btn-mv-green {
     background-color: #19BD60 !important;
 }
+
+body {
+    background-color: #f8f9fa; /* Setting a background color */
+}
+/* General Styles */
+.container {
+    font-family: 'Arial', sans-serif;
+}
+
+h1, h2, h5 {
+    color: #333;
+}
+
+p {
+    line-height: 1.6;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    width: 50%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+}
