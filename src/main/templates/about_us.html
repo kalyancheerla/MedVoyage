@@ -4,47 +4,15 @@
 {% block title %}MedVoyage | About Us{% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>About Us</title>
-  <!-- Add Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-
-  <!-- About Us Intro -->
-  <section class="py-5">
-    <div class="container text-center">
-      <h1>About Us</h1>
-      <p style="text-align: justify;">
-        Looking for a hassle-free, efficient, and seamless healthcare access experience? Look no further than MedVoyage - the ultimate online appointment booking system designed to simplify and expedite the appointment process for patients and healthcare professionals. With MedVoyage, you can enjoy tailored doctor selections based on your preferences, ensuring you get the best possible care. What's more, our web-based application guarantees secure personal data protection, so you can rest easy knowing your information is safe. Revolutionize your healthcare access with MedVoyage - Sign Up today and experience unparalleled convenience and efficiency.
-      </p>
-    </div>
-  </section>
-
-  <!-- Developers Info 
-  <section class="bg-light py-5">
-    <div class="container">
-      <h2 class="text-center">Meet the Developers</h2>
-      <div class="row">
-         Loop through developers 
-        {% for developer in developers %}
-        <div class="col-md-4">
-          <div class="card">
-            <img src="{% static developer.image|stringformat:'s' %}" class="card-img-top" alt="{{ developer.name }}">
-            <div class="card-body">
-              <h5 class="card-title">{{ developer.name }}</h5>
-              <p class="card-text">{{ developer.bio }}</p>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
--->
+<!-- About Us Intro -->
+<section class="py-5">
+  <div class="container text-center">
+    <h1>About Us</h1>
+    <p style="text-align: justify;">
+      Looking for a hassle-free, efficient, and seamless healthcare access experience? Look no further than MedVoyage - the ultimate online appointment booking system designed to simplify and expedite the appointment process for patients and healthcare professionals. With MedVoyage, you can enjoy tailored doctor selections based on your preferences, ensuring you get the best possible care. What's more, our web-based application guarantees secure personal data protection, so you can rest easy knowing your information is safe. Revolutionize your healthcare access with MedVoyage - Sign Up today and experience unparalleled convenience and efficiency.
+    </p>
+  </div>
+</section>
 
 <!-- Developers Info -->
 <section class="bg-light py-5">
@@ -66,15 +34,5 @@
     </div>
   </div>
 </section>
-
-
-  <!-- Add Bootstrap and jQuery JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-
-</body>
-</html>
-
 {% endblock %}
 
