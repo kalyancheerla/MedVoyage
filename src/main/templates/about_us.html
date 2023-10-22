@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block title %}MedVoyage | About Us{% endblock %}
 
@@ -23,6 +22,7 @@
       {% for developer in developers %}
       <div class="col-md-4 mb-3">
         <div class="card h-100 border-0 shadow-sm">
+          {% load static %}
           <img src="{% static developer.image|stringformat:'s' %}" class="card-img-top rounded-circle mx-auto d-block" alt="{{ developer.name }}" style="width:60%; object-fit: cover;">
           <div class="card-body text-center">
             <h5 class="card-title">{{ developer.name }}</h5>
