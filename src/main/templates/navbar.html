@@ -1,7 +1,7 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <!-- Brand Logo and Name -->
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="{% url 'home' %}">
         {% load static %}
         <img src={% static "images/MedVoyageLogo.png" %} width="30" height="30" class="d-inline-block align-top" alt="Logo">
         MedVoyage
@@ -24,7 +24,7 @@
             </li>
             <!-- Login/Signup Button -->
             <li class="nav-item">
-                <a href="signup/" class="nav-link fw-bold text-mv-green">Login/Signup</a>
+                <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
             </li>
         </ul>
     </div>
