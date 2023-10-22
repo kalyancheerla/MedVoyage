@@ -24,7 +24,8 @@
 * "python src/manage.py makemigrations" -- creates the tables and schema of models in MySQL DB
 * "python src/manage.py migrate"
 
-# Server running
+# To run Django web server
 * "python src/manage.py runserver" -- runs the web server and the developer can view it on localhost:8000/
 
-# "python src/manage.py test main"
+# To run unit testcases
+* "python src/manage.py test main"
