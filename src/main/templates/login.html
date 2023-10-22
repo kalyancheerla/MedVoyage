@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}MedVoyage | Login{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Login</h2>
+                        <form id="login-form" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_username">Username</label>
+                                <input type="text" class="form-control form-control-lg" id="id_username" name="username" placeholder="JohnDoe">
+                            </div>
+
+                            <div>
+                                <label for="id_password">Password</label>
+                                <input type="password" class="form-control form-control-lg" id="id_password" name="password" placeholder="Enter your password">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block text-center">Login</button>
+                            
+                            <div class="text-center">
+                                <a href="{% url 'signup' %}">Don't have an account? Sign Up Here</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

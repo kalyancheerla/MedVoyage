@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "main"
+    "main.apps.MainConfig"
 ]
 
 MIDDLEWARE = [
@@ -85,6 +85,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'main.PatientModel'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -126,3 +127,6 @@ STATIC_URL = '/main/static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login/'  # Replace with the name of your login URL pattern
+LOGIN_REDIRECT_URL = '/'  # Replace with your desired redirect URL after login
