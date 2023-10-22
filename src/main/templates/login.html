@@ -13,7 +13,7 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="id_username">Username</label>
-                                <input type="text" class="form-control form-control-lg" id="id_username" name="username" placeholder="JohnDoe">
+                                <input type="text" class="form-control form-control-lg mb-2" id="id_username" name="username" placeholder="JohnDoe">
                             </div>
 
                             <div>
@@ -21,7 +21,7 @@
                                 <input type="password" class="form-control form-control-lg" id="id_password" name="password" placeholder="Enter your password">
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-block text-center">Login</button>
+                            <button type="submit" class="btn btn-primary btn-block text-center mt-2">Login</button>
                             
                             <div class="text-center">
                                 <a href="{% url 'signup' %}">Don't have an account? Sign Up Here</a>
