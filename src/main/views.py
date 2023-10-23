@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, ResetPasswordForm
+from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 
 def home(request):
@@ -25,6 +26,26 @@ def user_login(request):
                 form = LoginForm()
 
     return render(request, "login.html")
+
+def reset_password(request):
+    if request.method == 'POST':
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            new_password = form.cleaned_data['new_password']
+            security_question = form.cleaned_data['security_question']
+
+            user = get_user_model().objects.get(username=username)
+            saved_security_question = getattr(user, 'security_question')
+            if saved_security_question == security_question:
+                user.set_password(new_password)
+                user.save()
+                return redirect(home)
+            else:
+                form = ResetPasswordForm()
+    return render(request, "reset_password.html")
+
+
 
 def signup(request):
     if request.method == 'POST':

@@ -1,0 +1,31 @@
+# Dev Setup Steps:
+
+* VS Code Install
+* Docker Desktop Install
+
+* Clone the repo into vscode
+
+* python interpreter setup
+* "pip install -r src/requirements.txt" -- installs both django & mysqlclient dependencies for our medvoyage project
+
+* we can set this up using python virtualenv
+    * creating a virtualenv
+    * sourcing into that virtualenv
+    * installing the dependencies
+
+* Set up MySQL DB in Docker
+* check tools/setup_mysql_docker.sh
+* "docker run -p 3306:3306 --name mysqlinstance -e MYSQL_ROOT_PASSWORD='pa$$w0rd' -d mysql:latest"
+* "docker exec -it mysqlinstance mysql -uroot -p'pa$$w0rd'"
+* MySQL command line opens,
+* CREATE DATABASE medvoyagedb;
+* exit
+
+* "python src/manage.py makemigrations" -- creates the tables and schema of models in MySQL DB
+* "python src/manage.py migrate"
+
+# To run Django web server
+* "python src/manage.py runserver" -- runs the web server and the developer can view it on localhost:8000/
+
+# To run unit testcases
+* "python src/manage.py test main"
