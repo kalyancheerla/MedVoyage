@@ -27,4 +27,5 @@ jobs:
         pip install -r src/requirements.txt
     - name: Run Tests
       run: |
+        cp src/medvoyage/settings-old.py src/medvoyage/settings.py
         python src/manage.py test main
