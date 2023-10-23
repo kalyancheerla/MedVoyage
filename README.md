@@ -13,6 +13,9 @@ Helping out healthcare scheduling with our mobile-first and user-friendly Clinic
 | [/docs/final-reports](./docs/final-reports) | Final deliverable reports for the project |
 | [/docs/planning-artifacts](./docs/planning-artifacts) | Project designs and planning documents |
 | [/src](./src) | Project source code |
+| [/src/main](./src/main) | Project main webapp |
+| [/src/main/tests](./src/main/tests) | Project main unit testcases |
+| [/src/medvoyage](./src/medvoyage) | Project settings |
 | [/tests](./tests) | Test cases from testing suites |
 | [/tools](./tools) | Utility scripts and other custom tools |
 
