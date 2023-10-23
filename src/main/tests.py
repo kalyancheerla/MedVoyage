@@ -190,14 +190,15 @@ class SignupTemplateTest(TestCase):
             'last_name': 'Doe',
             'email': 'John@email.com',
             'phone': '555-555-5555',
+            'security_question': 'Dreamland',
             'password': 'password123',
             'password2': 'password123',
             'login_type': 'patient',
         })
-        
+
         # Expect a redirect (status code 302) after a successful signup
         self.assertEqual(response.status_code, 302)
-    
+
 
     def test_login_type_field_rendered(self):
         response = self.client.get('/signup/')  # Adjust the URL as per your project
