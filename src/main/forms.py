@@ -24,4 +24,11 @@ class ResetPasswordForm(forms.Form):
     username = forms.CharField()
     security_question = forms.CharField()
     new_password = forms.CharField()
-    
+   
+
+class UpdatePatientForm(forms.ModelForm):
+    class Meta:
+        model = PatientModel
+        fields = ['first_name', 'last_name', 'phone', 'email']
+
+ 

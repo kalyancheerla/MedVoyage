@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from .forms import SignupForm, LoginForm, ResetPasswordForm
+from .forms import SignupForm, LoginForm, ResetPasswordForm,UpdatePatientForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 
@@ -85,4 +85,21 @@ def contact_us_form_submit(request):
 def signout(request):
     logout(request)
     return redirect(home)
+
+
+
+
+
+def update_patient_info(request):
+    if request.method == 'POST':
+        form = UpdatePatientForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(home)  
+    else:
+       form = UpdatePatientForm(instance=request.user)
+    return render(request, 'updateform.html')
+
+
+    
     
