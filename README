@@ -10,5 +10,5 @@ Repo contains the project implementation for the Squad8 team's MedVoyage reposit
     /docs/meeting-minutes       - Meeting minutes for recorded weekly and ad-hoc group meetings
     /docs/final-reports         - Final deliverable reports for the project
     /docs/planning-artifacts    - Project designs and planning documents
-    /test                       - Test cases from testing suites
+    /tests                      - Test cases from testing suites
     /tools                      - Utility scripts and other custom tools

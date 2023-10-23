@@ -13,7 +13,7 @@ Helping out healthcare scheduling with our mobile-first and user-friendly Clinic
 | [/docs/final-reports](./docs/final-reports) | Final deliverable reports for the project |
 | [/docs/planning-artifacts](./docs/planning-artifacts) | Project designs and planning documents |
 | [/src](./src) | Project source code |
-| [/test](./test) | Test cases from testing suites |
+| [/tests](./tests) | Test cases from testing suites |
 | [/tools](./tools) | Utility scripts and other custom tools |
 
 ### Contributors:
