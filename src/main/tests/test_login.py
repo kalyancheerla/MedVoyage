@@ -57,6 +57,10 @@ class LoginTestCases(TestCase):
         for nav_field in NavBar_Fields + ['Sign Out']:
             self.assertContains(response, nav_field)
 
+        response = self.client.get('/signout/')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/home/')
+
     def test_login_failure(self):
         response = self.client.post('/signup/', data={
             'username': 'JohnDoe',
