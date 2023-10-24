@@ -1,0 +1,9 @@
+* Files submitted for Deliverable 3:
+
+    - Report :-                     docs/final-reports/Deliverable 3 Report.pdf
+    - Inspection Code :-            inspection-code-squad8.pdf
+
+* Other artifacts:
+
+    - MedVoyage Logo :-                                 docs/planning-artifacts/Green Black Minimalist Health Care Logo.png
+    - Outlined Instructions for Development Setup :-    docs/planning-artifacts/dev_setup_instructions.txt
