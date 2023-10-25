@@ -22,10 +22,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
             </li>
-            <!-- Login/Signup Button -->
-            <li class="nav-item">
-                <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
-            </li>
+            <!-- Login/Signup,Profile Button -->
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'clientprofile' %}" class="nav-link fw-bold text-mv-green">Profile</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
+                </li>
+            {% endif %}
             <!-- Sign Out Button -->
             {% if user.is_authenticated %}
             <li class="nav-item">
