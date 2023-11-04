@@ -1,5 +1,5 @@
 from django import forms
-from .models import PatientModel
+from .models import PatientModel, AppointmentModel
 
 class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -18,10 +18,19 @@ class SignupForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     username = forms.CharField()
-    password = forms.CharField() #needs proper password/auth
+    password = forms.CharField()
 
 class ResetPasswordForm(forms.Form):
     username = forms.CharField()
     security_question = forms.CharField()
     new_password = forms.CharField()
+
+class BookAppointmentForm(forms.Form):
+    date = forms.DateField(initial='01/01/2023')
+    time = forms.TimeField(initial='12:00')
+    patient_id = forms.CharField()
+    class Meta:
+        model = AppointmentModel
+        fields = ('date', 'time', 'patient_id')
+    
     

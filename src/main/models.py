@@ -12,3 +12,8 @@ class PatientModel(AbstractUser):
     )
     login_type = models.CharField(max_length=10, choices=LOGIN_CHOICES, default='patient')
     security_question = models.CharField(max_length=86, blank=True, null=True)
+
+class AppointmentModel():
+    appointment_date = models.DateField()
+    appointment_time = models.TimeField()
+    patient_id = models.CharField()
