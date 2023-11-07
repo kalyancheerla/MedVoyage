@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-#xfxx02-4!fh83+qkbd4)8(v&$uijmgdkjeh1)-nvjk9co!2*w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [env('MY_ALLOWED_IP')]
 
 
 # Application definition
@@ -80,14 +80,21 @@ WSGI_APPLICATION = 'medvoyage.wsgi.application'
 
 DATABASES = {
     'default': {
-        "ENGINE"  : "django.db.backends.mysql",
-        "NAME"    : "medvoyagedb",
-        "USER"    : "root",
-        "PASSWORD": "pa$$w0rd",
-        "HOST"    : "127.0.0.1",
-        "PORT"    : "3306",
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Override with MySQL configuration from environment variables
+if env('DB_ENGINE') == 'django.db.backends.mysql':
+    DATABASES['default'] = {
+        'ENGINE': env('DB_ENGINE'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+    }
 
 AUTH_USER_MODEL = 'main.User'
 
