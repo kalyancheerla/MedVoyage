@@ -2,13 +2,16 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
-class PatientModel(AbstractUser):
+class User(AbstractUser):
     phone = models.CharField(max_length=15, blank=True, null=True)
-
-    LOGIN_CHOICES = (
-        ('patient', 'Patient'),
-        ('doctor', 'Doctor'),
-        ('staff', 'Staff'),
-    )
-    login_type = models.CharField(max_length=10, choices=LOGIN_CHOICES, default='patient')
     security_question = models.CharField(max_length=86, blank=True, null=True)
+    is_doctor = models.BooleanField(default=False)
+    is_patient = models.BooleanField(default=False)
+
+class DoctorProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # Additional fields for doctor
+
+class PatientProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # Additional fields for patient
