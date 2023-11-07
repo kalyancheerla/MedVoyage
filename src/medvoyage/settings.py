@@ -18,7 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Get environmental variables
 env = environ.Env(
-    MY_ALLOWED_IP=(str, '')
+    MY_ALLOWED_IP=(str, ''),
+    DB_ENGINE=(str, 'django.db.backends.sqlite3')
 )
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
