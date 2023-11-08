@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Get environmental variables
 env = environ.Env(
-    MY_ALLOWED_IP=(str, ''),
+    MY_ALLOWED_IP=(str, '127.0.0.1'),
     DB_ENGINE=(str, 'django.db.backends.sqlite3'),
     EMAIL_HOST_USER=(str, ''),
     EMAIL_HOST_PASSWORD=(str, ''),
