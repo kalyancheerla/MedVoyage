@@ -39,7 +39,7 @@ class ResetPasswordForm(forms.Form):
     
 class UpdatePatientForm(forms.ModelForm):
     class Meta:
-        model = PatientModel
-        fields = ['first_name', 'last_name', 'phone', 'email']
+        model = User
+        fields = ('first_name', 'last_name', 'phone', 'email')
     
 

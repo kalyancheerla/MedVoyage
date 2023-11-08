@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
-from .forms import SignupForm, LoginForm, ResetPasswordForm
 from .models import DoctorProfile, PatientProfile
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
