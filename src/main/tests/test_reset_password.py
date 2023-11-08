@@ -26,7 +26,7 @@ class ResetPasswordTestCases(TestCase):
             'password': 'idk',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/home/')
+        self.assertEqual(response.url, '/clientdashboard/')
 
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)
@@ -51,7 +51,7 @@ class ResetPasswordTestCases(TestCase):
             'password': 'pass1234',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/home/')
+        self.assertEqual(response.url, '/clientdashboard/')
 
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)

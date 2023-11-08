@@ -11,6 +11,9 @@ class User(AbstractUser):
 class DoctorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Additional fields for doctor
+    specialization = models.CharField(max_length=100,blank=True)
+    bio=models.TextField(blank=True)
+    availability_hours = models.CharField(max_length=100,blank=True)
 
 class PatientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
