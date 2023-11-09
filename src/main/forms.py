@@ -1,14 +1,26 @@
 from django import forms
-from .models import PatientModel
+from .models import User
 
 class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
-    login_type = forms.ChoiceField(choices=PatientModel.LOGIN_CHOICES, widget=forms.RadioSelect, initial='both')
+    login_type = forms.ChoiceField(choices=[('patient', 'Patient'), ('doctor', 'Doctor'), ('staff', 'Staff')], widget=forms.RadioSelect)
     security_question = forms.CharField()
     class Meta:
-        model = PatientModel
-        fields = ('username', 'first_name', 'last_name', 'email', 'phone', 'security_question', 'password')
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'phone', 'security_question', 'password', 'password2')
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        login_type = self.cleaned_data['login_type']
+        user.set_password(self.cleaned_data["password"])
+        if login_type == 'doctor':
+            user.is_doctor = True
+        elif login_type == 'patient':
+            user.is_patient = True
+        if commit:
+            user.save()
+        return user
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -25,7 +37,12 @@ class ResetPasswordForm(forms.Form):
     security_question = forms.CharField()
     new_password = forms.CharField()
 
+class UpdatePatientForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'phone', 'email')
+
 class UpdateDoctorForm(forms.ModelForm):
     class Meta:
         model = PatientModel
-        fields = ['first_name', 'last_name', 'phone', 'email']    
+        fields = ['first_name', 'last_name', 'phone', 'email']
