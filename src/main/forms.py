@@ -44,5 +44,5 @@ class UpdatePatientForm(forms.ModelForm):
 
 class UpdateDoctorForm(forms.ModelForm):
     class Meta:
-        model = PatientModel
+        model = User
         fields = ['first_name', 'last_name', 'phone', 'email']

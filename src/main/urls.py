@@ -15,7 +15,7 @@ urlpatterns = [
     path("clientdashboard/",views.ClientDashboard, name='clientdashboard'),
     path('clientprofile/', views.ClientProfile, name='clientprofile'),
     path('update/', views.update_patient_info, name='update_patient_info'),
-    path("dprof/", views.doctor, name="doctor"),
+    path("doctorprofile/", views.doctor, name="doctorprofile"),
     path("updateform/",views.update_doctor_info, name="doctorupdate")
 
 ]

@@ -104,7 +104,7 @@ def update_patient_info(request):
     return render(request, 'updateform.html')
 
 def doctor(request):
-     return render(request, 'dprof.html')
+     return render(request, 'doctorprofile.html')
 
 def update_doctor_info(request):
     if request.method == 'POST':
