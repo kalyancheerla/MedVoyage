@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %} Doctor Profile{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <form>
+            <div class="form-row">
+                <div class="col-md-8">
+                    <h1>Dr.Manushree</h1>
+                    <h3>Cardiologist</h3>
+                   
+                    <div class="form-group" style="position:relative">
+                        <!-- button id="edit" onclick="updateform.html" style="float: right">Edit</button -->
+                        <a id="edit" href={% url 'update_doctor_info' %} style="float: right">Edit</a>
+
+                        <label for="fname"><strong>First Name:</strong></label>
+                        <input type="text" class="form-control" id="fname" value="Manushree" readonly>
+
+                        <label for="lname"><strong>Last Name:</strong></label>
+                        <input type="text" class="form-control" id="lname" value="Buyya" readonly>
+
+                        <label for="email"><strong>Email:</strong></label>
+                        <input type="text" class="form-control" id="email" value="manugoud2001@gmail.com" readonly>
+                
+                        <label for="phone"><strong>Phone:</strong></label>
+                        <input type="text" class="form-control" id="phone" value="(123) 456-7890" readonly>
+
+                        <label for="spec"><strong>Specialization:</strong></label>
+                        <input type="text" class="form-control" id="specialization" value="Cardiologist" readonly>
+
+                        <label for="exp"><strong>Experience:</strong></label>
+                        <input type="text" class="form-control" id="experience" value="15" readonly>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#edit').click(function() {
+                $('.form-control').prop('readonly', false);
+                $('#edit').text('Save'); // Change the button text to "Save"
+                $('#edit').click(function() {
+                    $('.form-control').prop('readonly', true);
+                    $('#edit').text('Edit'); // Change the button text back to "Edit"
+                    // Perform the update action here, sending data to the server
+                });
+            });
+        });
+    </script>
+{% endblock %}

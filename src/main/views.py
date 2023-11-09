@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from .forms import SignupForm, LoginForm, ResetPasswordForm
+from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdateDoctorForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 
@@ -21,7 +21,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(home) # redirect user to home page after user is logged in
+                return redirect(doctor) # redirect user to home page after user is logged in
             else:
                 form = LoginForm()
 
@@ -85,4 +85,17 @@ def contact_us_form_submit(request):
 def signout(request):
     logout(request)
     return redirect(home)
+
+def doctor(request):
+     return render(request, 'dprof.html')
+ 
+def update_doctor_info(request):
+    if request.method == 'POST':
+        form = UpdateDoctorForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(doctor)  
+    else:
+       form = UpdateDoctorForm(instance=request.user)
+    return render(request, 'updateform.html')
     
