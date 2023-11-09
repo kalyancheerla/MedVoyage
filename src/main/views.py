@@ -95,7 +95,7 @@ def update_doctor_info(request):
         if form.is_valid():
             form.save()
             return redirect(doctor)  
-    else:
-       form = UpdateDoctorForm(instance=request.user)
-    return render(request, 'updateform.html')
+        else:
+            form = UpdateDoctorForm(instance=request.user)
+    return render(request, 'doctorupdateform.html')
     

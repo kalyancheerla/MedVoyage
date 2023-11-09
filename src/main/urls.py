@@ -12,5 +12,5 @@ urlpatterns = [
     path("signout/", views.signout, name="signout"),
     path("reset_password/", views.reset_password, name='reset_password'),
     path("dprof/", views.doctor, name="doctor"),
-    path("updateform/",views.update_doctor_info, name="doctorupdate")
+    path("doctorupdateform/",views.update_doctor_info, name="doctorupdate")
 ]
