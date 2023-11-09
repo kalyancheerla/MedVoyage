@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <!-- Brand Logo and Name -->
    {% if user.is_authenticated %}
-        <a class="navbar-brand" href="{% url 'clientdashboard' %}">
+        <a class="navbar-brand" href="{% url 'client_dashboard' %}">
             {% load static %}
             <img src={% static "images/MedVoyageLogo.png" %} width="30" height="30" class="d-inline-block align-top" alt="Logo">
             MedVoyage
@@ -33,7 +33,7 @@
             <!-- Login/Signup,Profile-->
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="{% url 'clientprofile' %}" class="nav-link fw-bold text-mv-green">Profile</a>
+                    <a href="{% url 'client_profile' %}" class="nav-link fw-bold text-mv-green">Profile</a>
                 </li>
             {% else %}
                 <li class="nav-item">

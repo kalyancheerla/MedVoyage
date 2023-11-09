@@ -22,7 +22,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(ClientDashboard) # redirect user to home page after user is logged in
+                return redirect(client_dashboard) # redirect user to home page after user is logged in
             else:
                 form = LoginForm()
 
@@ -87,10 +87,10 @@ def signout(request):
     logout(request)
     return redirect(home)
 
-def ClientDashboard(request):
+def client_dashboard(request):
     return render(request, "clientdashboard.html")
 
-def ClientProfile(request):
+def client_profile(request):
     return render(request, "clientprofile.html")
 
 def update_patient_info(request):
@@ -98,7 +98,7 @@ def update_patient_info(request):
         form = UpdatePatientForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(ClientProfile)  
+            return redirect(client_profile)  
     else:
        form = UpdatePatientForm(instance=request.user)
     return render(request, 'updateform.html')
