@@ -49,7 +49,7 @@ class LoginTestCases(TestCase):
             'password': 'password123',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/clientdashboard/')
+        self.assertEqual(response.url, '/client_dashboard/')
 
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)
