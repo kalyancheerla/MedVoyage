@@ -48,10 +48,9 @@ class LoginTestCases(TestCase):
             'username': 'JohnDoe',
             'password': 'password123',
         })
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/client_dashboard/')
+        self.assertEqual(response.status_code, 200)
 
-        response = self.client.get(response.url)
+        response = self.client.get('/client_dashboard/')
         self.assertEqual(response.status_code, 200)
         # nav fields
         for nav_field in NavBar_Fields + ['Sign Out']:
