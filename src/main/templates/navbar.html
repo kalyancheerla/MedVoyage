@@ -1,11 +1,19 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <!-- Brand Logo and Name -->
-    <a class="navbar-brand" href="{% url 'home' %}">
-        {% load static %}
-        <img src={% static "images/MedVoyageLogo.png" %} width="30" height="30" class="d-inline-block align-top" alt="Logo">
-        MedVoyage
-    </a>
+   {% if user.is_authenticated %}
+        <a class="navbar-brand" href="{% url 'client_dashboard' %}">
+            {% load static %}
+            <img src={% static "images/MedVoyageLogo.png" %} width="30" height="30" class="d-inline-block align-top" alt="Logo">
+            MedVoyage
+        </a> 
+    {% else %}
+        <a class="navbar-brand" href="{% url 'home' %}">
+            {% load static %}
+            <img src={% static "images/MedVoyageLogo.png" %} width="30" height="30" class="d-inline-block align-top" alt="Logo">
+            MedVoyage
+        </a>
+    {% endif %}
 
     <!-- Toggler for Mobile Devices -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -22,10 +30,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
             </li>
-            <!-- Login/Signup Button -->
-            <li class="nav-item">
-                <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
-            </li>
+            <!-- Login/Signup,Profile-->
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'client_profile' %}" class="nav-link fw-bold text-mv-green">Profile</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
+                </li>
+            {% endif %}
             <!-- Sign Out Button -->
             {% if user.is_authenticated %}
             <li class="nav-item">

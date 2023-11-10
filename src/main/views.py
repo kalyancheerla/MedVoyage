@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from .forms import SignupForm, LoginForm, ResetPasswordForm, BookAppointmentForm
+from .forms import SignupForm, LoginForm, ResetPasswordForm, BookAppointmentForm, UpdatePatientForm
+from .models import DoctorProfile, PatientProfile
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 from main.models import AppointmentModel
@@ -21,7 +22,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(home) # redirect user to home page after user is logged in
+                return redirect(client_dashboard) # redirect user to home page after user is logged in
             else:
                 form = LoginForm()
 
@@ -45,15 +46,15 @@ def reset_password(request):
                 form = ResetPasswordForm()
     return render(request, "reset_password.html")
 
-
-
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
+            user = form.save()
+            if user.is_doctor:
+                DoctorProfile.objects.create(user=user)
+            elif user.is_patient:
+                PatientProfile.objects.create(user=user)
             return redirect('/')
     else:
         form = SignupForm()
@@ -85,6 +86,22 @@ def contact_us_form_submit(request):
 def signout(request):
     logout(request)
     return redirect(home)
+
+def client_dashboard(request):
+    return render(request, "clientdashboard.html")
+
+def client_profile(request):
+    return render(request, "clientprofile.html")
+
+def update_patient_info(request):
+    if request.method == 'POST':
+        form = UpdatePatientForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(client_profile)  
+    else:
+       form = UpdatePatientForm(instance=request.user)
+    return render(request, 'updateform.html')    
     
 def book_appointment(request):
     # add code to make sure page is not visible unless logged in 
