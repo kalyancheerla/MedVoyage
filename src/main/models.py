@@ -24,17 +24,23 @@ class Appointments(models.Model):
     appointment_id = models.AutoField(primary_key=True)
     date = models.DateField(default=timezone.now)
     time = models.TimeField(default=timezone.now)
-    patient = models.ForeignKey(
-        'PatientProfile',
-        on_delete=models.CASCADE,
-        related_name='patient_appointments'
-    )
-    doctor = models.ForeignKey(
-        'DoctorProfile',
-        on_delete=models.CASCADE,
-        related_name='doctor_appointments'
-    )
+    # patient = models.ForeignKey(
+    #     'PatientProfile',
+    #     on_delete=models.CASCADE,
+    #     related_name='patient_appointments'
+    # )
+    # doctor = models.ForeignKey(
+    #     'DoctorProfile',
+    #     on_delete=models.CASCADE,
+    #     related_name='doctor_appointments'
+    # )
     details = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"Appointment {self.appointment_id} - {self.doctor.user.username} with {self.patient.user.username} on {self.date} at {self.time}"
+
+class TestModel(models.Model):
+    test_date = models.DateField(auto_now=True)
+    test_time = models.TimeField(auto_now=True)
+    test_details = models.CharField(max_length=100,blank=True)
+    test_field = models.CharField(max_length=100, blank=True)
