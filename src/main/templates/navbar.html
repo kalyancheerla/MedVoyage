@@ -40,9 +40,15 @@
             </li>
             <!-- Login/Signup,Profile-->
             {% if user.is_authenticated %}
+                {% if user.is_doctor %}
+                <li class="nav-item">
+                    <a href="{% url 'doctor_profile' %}" class="nav-link fw-bold text-mv-green">Profile</a>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a href="{% url 'client_profile' %}" class="nav-link fw-bold text-mv-green">Profile</a>
                 </li>
+                {% endif %}
             {% else %}
                 <li class="nav-item">
                     <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>

@@ -108,3 +108,6 @@ def update_patient_info(request):
     
 def doctor_dashboard(request):
     return render(request, "doctordashboard.html")
+
+def doctor_profile(request):
+    return render(request, "doctor_profile.html")
