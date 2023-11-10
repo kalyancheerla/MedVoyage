@@ -2,10 +2,9 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from .forms import SignupForm, LoginForm, ResetPasswordForm, BookAppointmentForm, UpdatePatientForm
-from .models import DoctorProfile, PatientProfile
+from .models import DoctorProfile, PatientProfile, Appointments
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
-from main.models import AppointmentModel
 
 def home(request):
     return render(request, "index.html")
@@ -102,19 +101,14 @@ def update_patient_info(request):
     else:
        form = UpdatePatientForm(instance=request.user)
     return render(request, 'updateform.html')    
-    
+
 def book_appointment(request):
     # add code to make sure page is not visible unless logged in 
     if request.method == 'POST':
         form = BookAppointmentForm(request.POST)
         if form.is_valid():
-            date = form.cleaned_data['date'] # temporary manual implementation until calander widget or calenar view is implmented
-            time = form.cleaned_data['time']
-            patient_id = form.cleaned_data['patient_id']
-
-            appointment = AppointmentModel(appointment_date=date, appointment_time=time, patient_id=patient_id)
-            appointment.save()
+            form.save()
             return redirect('/')
     else:
         form = BookAppointmentForm()
-    return render(request, 'book_appointment.html', {'form': form})
+    return render(request, 'book_appointment.html')

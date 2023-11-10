@@ -6,7 +6,7 @@ from django.utils import timezone
 class User(AbstractUser):
     phone = models.CharField(max_length=15, blank=True, null=True)
     security_question = models.CharField(max_length=86, blank=True, null=True)
- is_doctor = models.BooleanField(default=False)
+    is_doctor = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)
 
 class DoctorProfile(models.Model):
