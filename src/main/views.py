@@ -22,7 +22,10 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(client_dashboard) # redirect user to home page after user is logged in
+                if user.is_doctor:
+                    return render(request, 'doctordashboard.html',)
+                else:
+                    return render(request, 'clientdashboard.html')
             else:
                 form = LoginForm()
 
@@ -103,3 +106,5 @@ def update_patient_info(request):
        form = UpdatePatientForm(instance=request.user)
     return render(request, 'clientupdateform.html')
     
+def doctor_dashboard(request):
+    return render(request, "doctordashboard.html")
