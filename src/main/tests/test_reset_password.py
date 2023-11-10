@@ -25,10 +25,9 @@ class ResetPasswordTestCases(TestCase):
             'username': 'pspk',
             'password': 'idk',
         })
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/client_dashboard/')
+        self.assertEqual(response.status_code, 200)
 
-        response = self.client.get(response.url)
+        response = self.client.get('/client_dashboard/')
         self.assertEqual(response.status_code, 200)
         for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
             self.assertContains(response, nav_field)
@@ -50,10 +49,9 @@ class ResetPasswordTestCases(TestCase):
             'username': 'pspk',
             'password': 'pass1234',
         })
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/client_dashboard/')
+        self.assertEqual(response.status_code, 200)
 
-        response = self.client.get(response.url)
+        response = self.client.get('/client_dashboard/')
         self.assertEqual(response.status_code, 200)
         for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
             self.assertContains(response, nav_field)
@@ -185,7 +183,7 @@ class ResetPasswordTestCases(TestCase):
             'username': 'pspk',
             'password': 'pass1234',
         })
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
         response = self.client.get('/home/')
         self.assertEqual(response.status_code, 200)

@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
+from .forms import UpdateDoctorForm
 from .models import DoctorProfile, PatientProfile
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
@@ -22,7 +23,10 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(client_dashboard) # redirect user to home page after user is logged in
+                if user.is_doctor:
+                    return render(request, 'doctordashboard.html',)
+                else:
+                    return render(request, 'clientdashboard.html')
             else:
                 form = LoginForm()
 
@@ -101,5 +105,20 @@ def update_patient_info(request):
             return redirect(client_profile)  
     else:
        form = UpdatePatientForm(instance=request.user)
-    return render(request, 'updateform.html')
+    return render(request, 'clientupdateform.html')
     
+def doctor_dashboard(request):
+    return render(request, "doctordashboard.html")
+
+def doctor_profile(request):
+    return render(request, "doctor_profile.html")
+
+def update_doctor_info(request):
+    if request.method == 'POST':
+        form = UpdateDoctorForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(doctor_profile)  
+    else:
+       form = UpdateDoctorForm(instance=request.user)
+    return render(request, 'update_doctor_info.html')
