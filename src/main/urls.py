@@ -16,5 +16,5 @@ urlpatterns = [
     path("client_dashboard/",views.client_dashboard, name='client_dashboard'),
     path('client_profile/', views.client_profile, name='client_profile'),
     path('client_update/', views.update_patient_info, name='update_patient_info'),
-    
+    path("cancel_appointment/", views.cancel_appointment, name='cancel_appointment'),
 ]

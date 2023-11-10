@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}MedVoyage | Cancel Appointment{% endblock %}
+
+{% block content %}
+    <div>
+        <form id="cancel-form" method="post">
+            {% csrf_token %}
+            <h2>Cancel an Appointment</h2>
+            <div class="form-group">
+                <label for="id_appointment" class="m-1">Select the appointment you want to cancel</label>
+                <!-- change to dropdown menu later -->
+                <input type="text" class="form-control form-control-lg mb-2" id="id_appointment" name="appointment" placeholder="Enter appointment id here">
+            </div>
+
+            <!-- add in check box to confirm appointment deletion here -->
+
+
+            <button type="submit" class="btn btn-mv-green btn-block text-center mt-2 text-white">Cancel Appointment</button>
+        </form>
+
+    </div>
+{% endblock %}

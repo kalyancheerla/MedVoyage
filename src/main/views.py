@@ -112,3 +112,6 @@ def book_appointment(request):
     else:
         form = BookAppointmentForm()
     return render(request, 'book_appointment.html')
+
+def cancel_appointment(request):
+    return render(request, 'cancel_appointment.html')
