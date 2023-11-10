@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class User(AbstractUser):
@@ -18,3 +19,22 @@ class DoctorProfile(models.Model):
 class PatientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Additional fields for patient
+
+class Appointments(models.Model):
+    appointment_id = models.AutoField(primary_key=True)
+    date = models.DateField(default=timezone.now)
+    time = models.TimeField(default=timezone.now)
+    patient = models.ForeignKey(
+        'PatientProfile',
+        on_delete=models.CASCADE,
+        related_name='patient_appointments'
+    )
+    doctor = models.ForeignKey(
+        'DoctorProfile',
+        on_delete=models.CASCADE,
+        related_name='doctor_appointments'
+    )
+    details = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Appointment {self.appointment_id} - {self.doctor.user.username} with {self.patient.user.username} on {self.date} at {self.time}"
