@@ -101,5 +101,5 @@ def update_patient_info(request):
             return redirect(client_profile)  
     else:
        form = UpdatePatientForm(instance=request.user)
-    return render(request, 'updateform.html')
+    return render(request, 'clientupdateform.html')
     
