@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
+from .forms import UpdateDoctorForm
 from .models import DoctorProfile, PatientProfile
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
@@ -111,3 +112,13 @@ def doctor_dashboard(request):
 
 def doctor_profile(request):
     return render(request, "doctor_profile.html")
+
+def update_doctor_info(request):
+    if request.method == 'POST':
+        form = UpdateDoctorForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(doctor_profile)  
+    else:
+       form = UpdateDoctorForm(instance=request.user)
+    return render(request, 'update_doctor_info.html')
