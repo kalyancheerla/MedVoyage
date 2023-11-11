@@ -7,6 +7,7 @@ from .models import DoctorProfile, PatientProfile
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 from .utils.twilio_utils import send_sms_verification_code, check_verification_code
+from django.conf import settings
 
 
 def home(request):
@@ -25,7 +26,8 @@ def user_login(request):
             if user is not None:
                 request.session['type'] = user.is_doctor
                 # Check if the user is verified
-                if user.is_verified:
+                if settings.TWO_FACTOR_AUTH is False or user.is_verified:
+                    login(request, user)
                     if user.is_doctor:
                         return render(request, 'doctordashboard.html',)
                     else:
