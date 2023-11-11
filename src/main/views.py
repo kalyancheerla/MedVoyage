@@ -24,9 +24,9 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 if user.is_doctor:
-                    return render(request, 'doctordashboard.html',)
+                    return redirect('/doctor_dashboard/')
                 else:
-                    return render(request, 'clientdashboard.html')
+                    return redirect('/client_dashboard/')
             else:
                 form = LoginForm()
 
