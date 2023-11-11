@@ -15,7 +15,6 @@ def send_sms_verification_code(phone_number):
         print(e)
         return "failed"
     
-    print(verification.status)
     return verification.status
 
 def check_verification_code(phone_number, verification_code):
@@ -30,7 +29,6 @@ def check_verification_code(phone_number, verification_code):
         print(e)
         return "failed"
 
-    print(verification_check.status)
     return verification_check.status
 
 
@@ -45,25 +43,19 @@ def verify_and_format_phone_number(phone_number):
 
     # Check if the phone number matches any of the patterns
     if re.match(pattern1, phone_number):
-        print("Verifying phone number: " + phone_number)
         # If the phone number doesn't start with '+1', add it
         if not phone_number.startswith('+1'):
             phone_number = '+1' + phone_number
-            print("Phone number is: " + phone_number)
         return phone_number
 
     elif re.match(pattern2, phone_number):
-        print("Verifying phone number: " + phone_number)
         # If the phone number doesn't start with '+', add '+'
         if not phone_number.startswith('+'):
             phone_number = '+' + phone_number
-            print("Phone number is: " + phone_number)
         return phone_number
 
     elif re.match(pattern3, phone_number):
-        print("Verifying phone number: " + phone_number)
         return phone_number
 
     else:
-        print("Invalid phone number format")
         return None

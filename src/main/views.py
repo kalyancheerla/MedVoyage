@@ -7,8 +7,6 @@ from .models import DoctorProfile, PatientProfile
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 from .utils.twilio_utils import send_sms_verification_code, check_verification_code
-import random
-from twilio.rest import Client
 
 
 def home(request):
@@ -25,6 +23,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
+                request.session['type'] = user.is_doctor
                 # Check if the user is verified
                 if user.is_verified:
                     login(request, user)
@@ -36,7 +35,6 @@ def user_login(request):
                     # If the user is not verified, send a verification code to the user's phone number                    
                     phone_number = getattr(user, 'phone')
                     request.session['phone_number'] = phone_number
-                    print(phone_number)
 
                     send_sms_verification_code(phone_number)
 
@@ -58,6 +56,9 @@ def verification(request):
             if status == 'approved':
                 # Clear the stored verification code from the session
                 del request.session['phone_number']
+                type = request.session['type']
+                if type:
+                    return redirect('doctor_dashboard')
                 return redirect('client_dashboard')
             else:
                 # If the verification code is invalid, redirect to the verification page and display an error message
