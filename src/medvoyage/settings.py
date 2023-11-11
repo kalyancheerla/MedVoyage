@@ -46,8 +46,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "main.apps.MainConfig"
+    "main.apps.MainConfig",
+    'codes',
+    'users',
+    'crispy_forms',
 ]
+
+CRISP_TEMPLATE_PACK = 'bootstrap4'
+LOGIN_URL = '/login'
+
+
+TWILIO_ACCOUNT_SID = 'AC6fddeae30fdb8d4a412d8ad794ecfee3'
+TWILIO_AUTH_TOKEN = '060a054f9221b0ca0950852902f0cf4e'
+TWILIO_PHONE_NUMBER = '+12148922196' # From number
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
