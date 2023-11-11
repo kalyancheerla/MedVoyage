@@ -26,7 +26,6 @@ def user_login(request):
                 request.session['type'] = user.is_doctor
                 # Check if the user is verified
                 if user.is_verified:
-                    login(request, user)
                     if user.is_doctor:
                         return render(request, 'doctordashboard.html',)
                     else:
@@ -35,6 +34,7 @@ def user_login(request):
                     # If the user is not verified, send a verification code to the user's phone number                    
                     phone_number = getattr(user, 'phone')
                     request.session['phone_number'] = phone_number
+                    request.session['username'] = username
 
                     send_sms_verification_code(phone_number)
 
@@ -52,10 +52,16 @@ def verification(request):
         if form.is_valid():
             verification_code = form.cleaned_data['verification']
             phone_number = request.session['phone_number']
+            username = request.session['username']
             status = check_verification_code(phone_number, verification_code)
             if status == 'approved':
-                # Clear the stored verification code from the session
+                # Set the user's verified status to True
+                user = get_user_model().objects.get(username=username)
                 del request.session['phone_number']
+                del request.session['username']
+                login(request, user)
+
+                # Redirect to the appropriate dashboard
                 type = request.session['type']
                 if type:
                     return redirect('doctor_dashboard')
