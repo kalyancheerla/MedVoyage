@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from django.contrib.auth import authenticate, login
 from .forms import SignupForm, LoginForm, ResetPasswordForm, BookAppointmentForm, UpdatePatientForm, CancelAppointmentForm, DoctorAppointments
 from .models import DoctorProfile, PatientProfile, Appointments
@@ -114,18 +114,28 @@ def book_appointment(request):
     return render(request, 'book_appointment.html')
 
 def cancel_appointment(request):
+    error_message = None
+    success_message = None
+
     if request.method == 'POST':
         form = CancelAppointmentForm(request.POST)
         if form.is_valid():
-            # data = form.cleaned_data
-            # id = data['appointment_id']
-            saved_id = getattr(appointments, 'appointment_id')
-            appointment = Appointments.objects.filter(id)
-            appointment.delete()
-            return redirect('/')
+            appointment_value = request.POST.get('appointment_id')
+            print("Appointment POST Value:", appointment_value)
+
+            try:
+                appointment = get_object_or_404(Appointments, appointment_id=appointment_value)
+                print("Appointment:", appointment)
+                appointment.delete()
+                success_message = "Appointment successfully canceled."
+                # return redirect('/')
+            except Http404:
+                error_message = "Appointment not found. Please enter a valid appointment ID."
     else:
         form = CancelAppointmentForm()
-    return render(request, 'cancel_appointment.html')
+
+    return render(request, 'cancel_appointment.html', {'form': form, 'error_message': error_message, 'success_message': success_message})
+
 
 def view_schedule(request):
     if request.method == 'POST':
