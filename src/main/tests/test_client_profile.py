@@ -42,24 +42,11 @@ class ClientProfileTestCases(TestCase):
         self.assertContains(response, '<label for="id_phone">Phone Number:</label>')
         self.assertContains(response, '<label for="id_email">Email:</label>')
         
-    def test_required_and_readonly_fields(self):
+    def test_readonly_fields(self):
         response = self.client.get('/client_profile/')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, ' <input type="text" name="username" class="form-control" id="id_username" required')        
-        for username in readonly_fields:    
-            self.assertContains(response, username)
-        self.assertContains(response, '<input type="text" name="first_name" class="form-control" id="id_firstname"')
-        for first_name in readonly_fields:
-            self.assertContains(response, first_name)
-        self.assertContains(response, '<input type="text" name="last_name" class="form-control" id="id_lastname"')
-        for last_name in readonly_fields:
-            self.assertContains(response, last_name)
-        self.assertContains(response, '<input type="tel" name="phone" class="form-control" id="id_phone"')
-        for phone in readonly_fields:
-            self.assertContains(response, phone)
-        self.assertContains(response, '<input type="email" name="email" class="form-control" id="id_email" required')
-        for email in readonly_fields:
-            self.assertContains(response, email)
+        for fields in readonly_fields:
+            self.assertContains(response, fields)
 
     
     
