@@ -8,8 +8,14 @@
         <form action="{% url 'view_schedule' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
+            {% for appointment in appointments %}
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ appointment.date }}</h5>
+                <p class="card-text">{{ appointment.time }}</p>
+                <p class="card-text">{{ appointment.details }}</p>
+              </div>
+            {% endfor %}
             <input type="submit" value="View" />
         </form>
-
     </div>
 {% endblock %}

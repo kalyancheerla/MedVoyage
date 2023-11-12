@@ -36,8 +36,11 @@ class Appointments(models.Model):
     # )
     details = models.TextField(blank=True, null=True)
 
+    # def __str__(self):
+    #     return f"Appointment {self.appointment_id} - {self.doctor.user.username} with {self.patient.user.username} on {self.date} at {self.time}"
+
     def __str__(self):
-        return f"Appointment {self.appointment_id} - {self.doctor.user.username} with {self.patient.user.username} on {self.date} at {self.time}"
+        return f"Appointment {self.appointment_id} - on {self.date} at {self.time}"
 
 class TestModel(models.Model):
     test_date = models.DateField(auto_now=True)

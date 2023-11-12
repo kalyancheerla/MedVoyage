@@ -131,7 +131,8 @@ def view_schedule(request):
     if request.method == 'POST':
         form = DoctorAppointments(request.POST)
         if form.is_valid():
-            return redirect('/')
+            all_appointments = Appointments.objects.all()
+            print(all_appointments)
     else:
         form = DoctorAppointments()
     return render (request, 'view_schedule.html', {'form': form})
