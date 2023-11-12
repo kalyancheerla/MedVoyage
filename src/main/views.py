@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 from django.contrib.auth import authenticate, login
+from django.forms import DateInput
 from .forms import SignupForm, LoginForm, ResetPasswordForm, BookAppointmentForm, UpdatePatientForm, CancelAppointmentForm, DoctorAppointments
 from .models import DoctorProfile, PatientProfile, Appointments
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
+from datetime import datetime, timedelta
+
 
 def home(request):
     return render(request, "index.html")
@@ -116,6 +119,7 @@ def book_appointment(request):
 def cancel_appointment(request):
     error_message = None
     success_message = None
+    appointments = None
 
     if request.method == 'POST':
         form = CancelAppointmentForm(request.POST)
@@ -124,17 +128,22 @@ def cancel_appointment(request):
             print("Appointment POST Value:", appointment_value)
 
             try:
-                appointment = get_object_or_404(Appointments, appointment_id=appointment_value)
+                appointment = Appointments.objects.get(appointment_id=appointment_value)
                 print("Appointment:", appointment)
                 appointment.delete()
                 success_message = "Appointment successfully canceled."
-                # return redirect('/')
-            except Http404:
+            except Appointments.DoesNotExist or ValueError:
                 error_message = "Appointment not found. Please enter a valid appointment ID."
     else:
         form = CancelAppointmentForm()
+        appointments = Appointments.objects.all()
 
-    return render(request, 'cancel_appointment.html', {'form': form, 'error_message': error_message, 'success_message': success_message})
+    return render(request, 'cancel_appointment.html', {
+        'form': form,
+        'error_message': error_message,
+        'success_message': success_message,
+        'appointments': appointments,
+    })
 
 
 def view_schedule(request):
