@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from .forms import SignupForm, LoginForm, ResetPasswordForm, BookAppointmentForm, UpdatePatientForm
+from .forms import SignupForm, LoginForm, ResetPasswordForm, BookAppointmentForm, UpdatePatientForm, CancelAppointmentForm, DoctorAppointments
 from .models import DoctorProfile, PatientProfile, Appointments
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
@@ -114,4 +114,24 @@ def book_appointment(request):
     return render(request, 'book_appointment.html')
 
 def cancel_appointment(request):
+    if request.method == 'POST':
+        form = CancelAppointmentForm(request.POST)
+        if form.is_valid():
+            # data = form.cleaned_data
+            # id = data['appointment_id']
+            saved_id = getattr(appointments, 'appointment_id')
+            appointment = Appointments.objects.filter(id)
+            appointment.delete()
+            return redirect('/')
+    else:
+        form = CancelAppointmentForm()
     return render(request, 'cancel_appointment.html')
+
+def view_schedule(request):
+    if request.method == 'POST':
+        form = DoctorAppointments(request.POST)
+        if form.is_valid():
+            return redirect('/')
+    else:
+        form = DoctorAppointments()
+    return render (request, 'view_schedule.html', {'form': form})

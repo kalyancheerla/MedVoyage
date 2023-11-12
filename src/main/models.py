@@ -44,3 +44,6 @@ class TestModel(models.Model):
     test_time = models.TimeField(auto_now=True)
     test_details = models.CharField(max_length=100,blank=True)
     test_field = models.CharField(max_length=100, blank=True)
+
+class DoctorAppointmentsModel(models.Model):
+    date = models.DateField()

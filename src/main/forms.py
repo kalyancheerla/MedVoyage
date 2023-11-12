@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Appointments, TestModel
+from .models import User, Appointments, TestModel, DoctorAppointmentsModel
 
 class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -47,4 +47,18 @@ class UpdatePatientForm(forms.ModelForm):
         model = User
         fields = ('first_name', 'last_name', 'phone', 'email')
     
+class CancelAppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointments
+        fields = ('appointment_id',)
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+class DoctorAppointments(forms.ModelForm):
+    class Meta:
+        model = DoctorAppointmentsModel
+        fields =('date',)
+        widgets = {
+            'date': DateInput(),
+        }
