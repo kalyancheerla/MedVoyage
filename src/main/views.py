@@ -133,6 +133,7 @@ def view_schedule(request):
         if form.is_valid():
             all_appointments = Appointments.objects.all()
             print(all_appointments)
+            return render (request, 'view_schedule.html',  {'appointments': all_appointments})
     else:
         form = DoctorAppointments()
     return render (request, 'view_schedule.html', {'form': form})
