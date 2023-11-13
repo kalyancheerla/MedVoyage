@@ -19,5 +19,8 @@ urlpatterns = [
     path('doctor_profile/', views.doctor_profile, name='doctor_profile'),
     path('doctor_update/', views.update_doctor_info, name='update_doctor_info'),
     path('verification/', views.verification, name='verification'),
-    
+    path('add_slots/', views.add_slots, name = 'add_slots'),
+    path('slots/', views.slots_list, name='slots_list'),
+    path('slots/edit/<int:slot_id>/', views.edit_slot, name='edit_slot'),
+    path('slots/delete/<int:slot_id>/', views.delete_slot, name='delete_slot')
 ]
