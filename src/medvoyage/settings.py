@@ -22,6 +22,7 @@ env = environ.Env(
     DB_ENGINE=(str, 'django.db.backends.sqlite3'),
     EMAIL_HOST_USER=(str, ''),
     EMAIL_HOST_PASSWORD=(str, ''),
+    TWO_FACTOR_AUTH=(bool, False),
 )
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -46,15 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "main.apps.MainConfig",
-    ]
-
-TWILIO_ACCOUNT_SID = 'AC6fddeae30fdb8d4a412d8ad794ecfee3'
-TWILIO_AUTH_TOKEN = '060a054f9221b0ca0950852902f0cf4e'
-TWILIO_VERIFY_SID = 'VA36d4aa1165435adfff4d5bd2f9b42b5f'
-TWILIO_PHONE_NUMBER = '+12148922196' # Twilio number set in the console
-TWO_FACTOR_AUTH = False # Set to True to enable 2FA
-
+    "main.apps.MainConfig"
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -162,4 +156,12 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+# Twilio Setup
+TWO_FACTOR_AUTH = env.bool('TWO_FACTOR_AUTH')
+if TWO_FACTOR_AUTH == True:
+    TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
+    TWILIO_AUTH_TOKEN = env('TWILIO_AUTH_TOKEN')
+    TWILIO_VERIFY_SID = env('TWILIO_VERIFY_SID')
+    TWILIO_PHONE_NUMBER = env('TWILIO_PHONE_NUMBER')
 
