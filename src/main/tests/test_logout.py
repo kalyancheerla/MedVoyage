@@ -31,7 +31,7 @@ class LogoutTestCases(TestCase):
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)
         # nav fields
-        for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link" > Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/signout/')
@@ -64,7 +64,7 @@ class LogoutTestCases(TestCase):
         for nav_field in NavBar_Fields:
             self.assertContains(response, nav_field)
 
-        self.assertNotContains(response, '<a href="/signout" class="nav-link" > Sign Out</a>')
+        self.assertNotContains(response, '<a href="/signout/" class="nav-link" > Sign Out</a>')
 
     def test_logout_present_in_about_contact_pages(self):
         response = self.client.post('/signup/', data={
@@ -89,12 +89,12 @@ class LogoutTestCases(TestCase):
 
         response = self.client.get('/about/')
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link" > Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/contact/')
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link" > Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/signout/')
