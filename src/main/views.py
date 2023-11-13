@@ -3,11 +3,13 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm, VerificationForm
 from .forms import UpdateDoctorForm
-from .models import DoctorProfile, PatientProfile
+from .models import DoctorProfile, PatientProfile, Appointments
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 from .utils.twilio_utils import send_sms_verification_code, check_verification_code
 from django.conf import settings
+import datetime
+from django.http import HttpResponseBadRequest
 
 
 def home(request):
@@ -171,3 +173,22 @@ def update_doctor_info(request):
     else:
        form = UpdateDoctorForm(instance=request.user)
     return render(request, 'update_doctor_info.html')
+
+def patient_appointments(request):
+    if not request.user.is_authenticated:
+        return HttpResponseBadRequest('Missing required field: required_field')
+    appointments = Appointments.objects.all()
+    past_appointments = []
+    upcoming_appointments = []
+    for appointment in appointments: 
+        if appointment.patient.user.id == request.user.id:
+            if appointment.date < datetime.date.today():
+                past_appointments.append(appointment)
+            elif appointment.date > datetime.date.today():
+                upcoming_appointments.append(appointment)
+            else: 
+                if appointment.time < datetime.datetime.now().time():
+                    past_appointments.append(appointment)
+                else:
+                    upcoming_appointments.append(appointment)
+    return render(request, "patient_appointments.html", {'past_appointments': past_appointments, 'upcoming_appointments': upcoming_appointments})
