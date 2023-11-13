@@ -30,7 +30,7 @@ class ResetPasswordTestCases(TestCase):
 
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link" > Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/signout/')
@@ -55,7 +55,7 @@ class ResetPasswordTestCases(TestCase):
 
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link" > Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/signout/')
@@ -189,5 +189,5 @@ class ResetPasswordTestCases(TestCase):
 
         response = self.client.get('/home/')
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link" > Sign Out</a>']:
             self.assertContains(response, nav_field)
