@@ -1,5 +1,7 @@
 from django.test import TestCase, Client
 
+NavBar_Fields = ["MedVoyage", "About", "Contact", "Login/Signup"]
+
 class CancelAppointmentTest(TestCase):
 
     def setUp(self):
@@ -25,7 +27,7 @@ class CancelAppointmentTest(TestCase):
 
     def test_delete_success(self):
         response = self.client.post('/book_appointment/', data={
-            'date': '11/13/2023',
+            'date': '2023-11-13',
             'time': '12:34',
             'details': 'test case appointment',
         })
@@ -38,7 +40,7 @@ class CancelAppointmentTest(TestCase):
 
     def test_delete_failure(self):\
         response = self.client.post('/book_appointment/', data={
-            'date': '11/13/2023',
+            'date': '2023-11-13',
             'time': '12:34',
             'details': 'test case appointment',
         })
