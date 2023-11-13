@@ -1,36 +1,85 @@
 from django.shortcuts import render, redirect
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
+from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm, VerificationForm
 from .forms import UpdateDoctorForm
 from .models import DoctorProfile, PatientProfile
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
+from .utils.twilio_utils import send_sms_verification_code, check_verification_code
+from django.conf import settings
+
 
 def home(request):
     return render(request, "index.html")
 
 def user_login(request):
-    if request.method == 'POST': # django login forms use POST method
-        form = LoginForm(request.POST) # send form to server
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
 
         if form.is_valid():
-            # clean inputs
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
 
             user = authenticate(request, username=username, password=password)
+
             if user is not None:
-                login(request, user)
-                if user.is_doctor:
-                    return redirect('/doctor_dashboard/')
+                request.session['type'] = user.is_doctor
+                # Check if the user is verified
+                if settings.TWO_FACTOR_AUTH is False or user.is_verified:
+                    login(request, user)
+                    if user.is_doctor:
+                        return redirect('doctor_dashboard')
+                    else:
+                        return redirect('client_dashboard')
                 else:
-                    return redirect('/client_dashboard/')
+                    # If the user is not verified, send a verification code to the user's phone number                    
+                    phone_number = getattr(user, 'phone')
+                    request.session['phone_number'] = phone_number
+                    request.session['username'] = username
+
+                    send_sms_verification_code(phone_number)
+
+                    # Redirect to the verification page
+                    return redirect('verification')
             else:
                 form = LoginForm()
 
     return render(request, "login.html")
+
+def verification(request):
+    if request.method == 'POST':
+        form = VerificationForm(request.POST)
+
+        if form.is_valid():
+            verification_code = form.cleaned_data['verification']
+            phone_number = request.session['phone_number']
+            username = request.session['username']
+            status = check_verification_code(phone_number, verification_code)
+            if status == 'approved':
+                # Set the user's verified status to True
+                user = get_user_model().objects.get(username=username)
+                del request.session['phone_number']
+                del request.session['username']
+                login(request, user)
+
+                # Redirect to the appropriate dashboard
+                type = request.session['type']
+                if type:
+                    return redirect('doctor_dashboard')
+                return redirect('client_dashboard')
+            else:
+                # If the verification code is invalid, redirect to the verification page and display an error message
+                form = VerificationForm()
+                return render(request, "verification.html", {'form': form, 'error': 'Invalid verification code'})
+        else:
+            form = VerificationForm()
+            return render(request, "verification.html", {'form': form, 'error': 'Please enter a valid verification code'})
+
+    else:
+        form = VerificationForm()
+
+    return render(request, "verification.html", {'form': form})
 
 def reset_password(request):
     if request.method == 'POST':

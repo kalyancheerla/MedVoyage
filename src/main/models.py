@@ -8,6 +8,9 @@ class User(AbstractUser):
     security_question = models.CharField(max_length=86, blank=True, null=True)
     is_doctor = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)
+    # Add below field for 2FA verification
+    is_verified = models.BooleanField(default=False)
+
 
 class DoctorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

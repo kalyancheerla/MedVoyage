@@ -32,6 +32,9 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField() #needs proper password/auth
 
+class VerificationForm(forms.Form):
+    verification = forms.CharField()
+
 class ResetPasswordForm(forms.Form):
     username = forms.CharField()
     security_question = forms.CharField()
