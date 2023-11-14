@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm, VerificationForm
 from .forms import UpdateDoctorForm, TimeSlotForm
-from .models import DoctorProfile, PatientProfile, AvailableSlot
+from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
@@ -12,6 +12,8 @@ from django.forms import formset_factory
 from .utils.twilio_utils import send_sms_verification_code, check_verification_code
 from django.conf import settings
 from django.views.decorators.cache import never_cache
+import datetime
+from django.http import HttpResponseBadRequest
 
 def home(request):
     return render(request, "index.html")
@@ -174,6 +176,25 @@ def update_doctor_info(request):
     else:
        form = UpdateDoctorForm(instance=request.user)
     return render(request, 'update_doctor_info.html')
+
+def patient_appointments(request):
+    if not request.user.is_authenticated:
+        return HttpResponseBadRequest('Missing required field: required_field')
+    appointments = Appointments.objects.all()
+    past_appointments = []
+    upcoming_appointments = []
+    for appointment in appointments: 
+        if appointment.patient.user.id == request.user.id:
+            if appointment.date < datetime.date.today():
+                past_appointments.append(appointment)
+            elif appointment.date > datetime.date.today():
+                upcoming_appointments.append(appointment)
+            else: 
+                if appointment.time < datetime.datetime.now().time():
+                    past_appointments.append(appointment)
+                else:
+                    upcoming_appointments.append(appointment)
+    return render(request, "patient_appointments.html", {'past_appointments': past_appointments, 'upcoming_appointments': upcoming_appointments})
 
 def add_slots(request):
     TimeSlotFormSet = formset_factory(TimeSlotForm, extra=1)
