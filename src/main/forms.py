@@ -1,7 +1,7 @@
 from django import forms
 from .models import User, AvailableSlot
 from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as gettext_lazy
 from django.forms.widgets import DateInput, TimeInput
 
 class SignupForm(forms.ModelForm):
@@ -70,6 +70,6 @@ class TimeSlotForm(forms.ModelForm):
         # Check if start_time is earlier than end_time
         if start_time and end_time:
             if end_time <= start_time:
-                raise ValidationError(_("End time must be after start time."))
+                raise ValidationError(gettext_lazy("End time must be after start time."))
 
         return cleaned_data

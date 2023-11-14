@@ -11,6 +11,7 @@ from django.views.decorators.http import require_POST
 from django.forms import formset_factory
 from .utils.twilio_utils import send_sms_verification_code, check_verification_code
 from django.conf import settings
+from django.views.decorators.cache import never_cache
 
 def home(request):
     return render(request, "index.html")
@@ -183,11 +184,12 @@ def add_slots(request):
             for form in formset.cleaned_data:
                 # Only proceed if form has data
                 if form:
+                    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
                     new_slot = AvailableSlot(
                         date=form['date'],
                         start_time=form['start_time'],
                         end_time=form['end_time'],
-                        doctor=request.user  # Assuming the user is the doctor
+                        doctor=doctor_profile  # Assign the DoctorProfile instance
                     )
                     new_slot.save()
             messages.success(request, "The available slots have been successfully added.")
@@ -203,9 +205,11 @@ def add_slots(request):
 def success(request):
     return render(request, 'success.html')
 
+@never_cache
 def slots_list(request):
-    slots = AvailableSlot.objects.filter(doctor=request.user).order_by('date', 'start_time')
-    return render(request, 'slots_list.html', {'slots': slots})
+    slots = AvailableSlot.objects.filter(doctor__user=request.user).order_by('date', 'start_time')
+    no_slots_available = not slots.exists()  # True if no slots are available
+    return render(request, 'slots_list.html', {'slots': slots, 'no_slots_available': no_slots_available})
 
 def edit_slot(request, slot_id):
     slot = get_object_or_404(AvailableSlot, id=slot_id)
@@ -220,7 +224,8 @@ def edit_slot(request, slot_id):
 
 @require_POST
 def delete_slot(request, slot_id):
-    slot = get_object_or_404(AvailableSlot, id=slot_id, doctor=request.user)
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    slot = get_object_or_404(AvailableSlot, id=slot_id, doctor=doctor_profile)
     slot.delete()
     messages.success(request, "The slot has been successfully deleted.")
     return redirect('slots_list')
