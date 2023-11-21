@@ -1,7 +1,7 @@
 from django import forms
 from .models import User, AvailableSlot
 from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as gettext_lazy
+from django.utils.translation import gettext_lazy
 from django.forms.widgets import DateInput, TimeInput
 
 class SignupForm(forms.ModelForm):
@@ -42,12 +42,12 @@ class ResetPasswordForm(forms.Form):
     username = forms.CharField()
     security_question = forms.CharField()
     new_password = forms.CharField()
-    
+
 class UpdatePatientForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'phone', 'email')
-    
+
 class UpdateDoctorForm(forms.ModelForm):
     class Meta:
         model = User
