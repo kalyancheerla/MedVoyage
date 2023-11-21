@@ -1,8 +1,8 @@
 from django import forms
-from .models import User, AvailableSlot
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy
 from django.forms.widgets import DateInput, TimeInput
+from . import models
 
 class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -10,7 +10,7 @@ class SignupForm(forms.ModelForm):
     login_type = forms.ChoiceField(choices=[('patient', 'Patient'), ('doctor', 'Doctor'), ('staff', 'Staff')], widget=forms.RadioSelect)
     security_question = forms.CharField()
     class Meta:
-        model = User
+        model = models.User
         fields = ('username', 'first_name', 'last_name', 'email', 'phone', 'security_question', 'password', 'password2')
 
     def save(self, commit=True):
@@ -45,17 +45,17 @@ class ResetPasswordForm(forms.Form):
 
 class UpdatePatientForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = models.User
         fields = ('first_name', 'last_name', 'phone', 'email')
 
 class UpdateDoctorForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = models.User
         fields = ('first_name', 'last_name', 'phone', 'email')
 
 class TimeSlotForm(forms.ModelForm):
     class Meta: #Tells Django which model should be used to create the form here 'AvailableSlot' and which fields should be included in the form
-        model = AvailableSlot
+        model = models.AvailableSlot
         fields = ['date', 'start_time', 'end_time']
         widgets = {
             'date': DateInput(attrs={'type': 'date', 'class': 'form-control'}),
@@ -73,3 +73,19 @@ class TimeSlotForm(forms.ModelForm):
                 raise ValidationError(gettext_lazy("End time must be after start time."))
 
         return cleaned_data
+
+class AppointmentForm(forms.ModelForm):
+    doctor = forms.ModelChoiceField(
+        queryset=models.DoctorProfile.objects.all(),
+        label="Doctor",
+        to_field_name="id",
+        empty_label="Select a Doctor",
+        widget=forms.Select,
+        required=True
+    )
+    class Meta:
+        model = models.Appointments
+        fields = ['doctor', 'date', 'time', 'details']
+
+    def __init__(self, *args, **kwargs):
+        super(AppointmentForm, self).__init__(*args, **kwargs)

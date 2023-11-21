@@ -14,6 +14,8 @@ class User(AbstractUser):
     # Add below field for 2FA verification
     is_verified = models.BooleanField(default=False)
 
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
 
 class DoctorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -21,6 +23,9 @@ class DoctorProfile(models.Model):
     specialization = models.CharField(max_length=100,blank=True)
     bio=models.TextField(blank=True)
     availability_hours = models.CharField(max_length=100,blank=True)
+
+    def __str__(self):
+        return f'Dr. {self.user.get_full_name()}'
 
 class PatientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -49,7 +54,6 @@ class AvailableSlot(models.Model):
     doctor = models.ForeignKey('DoctorProfile', on_delete=models.CASCADE)
     date = models.DateField()
     start_time = models.TimeField()
-
     end_time = models.TimeField()
 
     def __str__(self):

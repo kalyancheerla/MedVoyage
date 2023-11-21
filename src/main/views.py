@@ -1,19 +1,18 @@
+import datetime
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout, get_user_model
-from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm, VerificationForm
-from .forms import UpdateDoctorForm, TimeSlotForm
-from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
 from django.contrib import messages
-from django.contrib.auth import get_user_model
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.forms import formset_factory
+from django.views.decorators.cache import never_cache
 from .utils.twilio_utils import send_sms_verification_code, check_verification_code
 from django.conf import settings
-from django.views.decorators.cache import never_cache
-import datetime
 from django.http import HttpResponseBadRequest
+from django.forms import formset_factory
+from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
+from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm
+from .forms import TimeSlotForm
+from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
 
 def home(request):
     return render(request, "index.html")
@@ -250,3 +249,18 @@ def delete_slot(request, slot_id):
     slot.delete()
     messages.success(request, "The slot has been successfully deleted.")
     return redirect('slots_list')
+
+@login_required
+def book_appointment(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            # Set the patient to the current user
+            appointment.patient = PatientProfile.objects.get(user=request.user)
+            appointment.save()
+            return redirect('home')  # Redirect to a confirmation or success page
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'book_appointment.html', {'form': form})
