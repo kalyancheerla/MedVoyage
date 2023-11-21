@@ -1,16 +1,19 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm, VerificationForm
-from .forms import UpdateDoctorForm
-from .models import DoctorProfile, PatientProfile, Appointments
+from .forms import UpdateDoctorForm, TimeSlotForm
+from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
+from django.views.decorators.http import require_POST
+from django.forms import formset_factory
 from .utils.twilio_utils import send_sms_verification_code, check_verification_code
 from django.conf import settings
+from django.views.decorators.cache import never_cache
 import datetime
 from django.http import HttpResponseBadRequest
-
 
 def home(request):
     return render(request, "index.html")
@@ -192,3 +195,58 @@ def patient_appointments(request):
                 else:
                     upcoming_appointments.append(appointment)
     return render(request, "patient_appointments.html", {'past_appointments': past_appointments, 'upcoming_appointments': upcoming_appointments})
+
+def add_slots(request):
+    TimeSlotFormSet = formset_factory(TimeSlotForm, extra=1)
+    if request.method == 'POST':
+        formset = TimeSlotFormSet(request.POST)
+        if formset.is_valid():
+            # Iterate over each form in the formset and save the individual forms
+            for form in formset.cleaned_data:
+                # Only proceed if form has data
+                if form:
+                    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+                    new_slot = AvailableSlot(
+                        date=form['date'],
+                        start_time=form['start_time'],
+                        end_time=form['end_time'],
+                        doctor=doctor_profile  # Assign the DoctorProfile instance
+                    )
+                    new_slot.save()
+            messages.success(request, "The available slots have been successfully added.")
+            return redirect('slots_list')
+        else:
+            # If the formset is not valid, render the formset back to the page to display errors
+            return render(request, 'add_slots.html', {'formset': formset})
+    else:
+        # If not a POST request, instantiate an empty formset to render on the page
+        formset = TimeSlotFormSet()
+        return render(request, 'add_slots.html', {'formset': formset})
+
+def success(request):
+    return render(request, 'success.html')
+
+@never_cache
+def slots_list(request):
+    slots = AvailableSlot.objects.filter(doctor__user=request.user).order_by('date', 'start_time')
+    no_slots_available = not slots.exists()  # True if no slots are available
+    return render(request, 'slots_list.html', {'slots': slots, 'no_slots_available': no_slots_available})
+
+def edit_slot(request, slot_id):
+    slot = get_object_or_404(AvailableSlot, id=slot_id)
+    if request.method == 'POST':
+        form = TimeSlotForm(request.POST, instance=slot)
+        if form.is_valid():
+            form.save()
+            return redirect('slots_list')  # Redirect to the slots list page
+    else:
+        form = TimeSlotForm(instance=slot)
+    return render(request, 'edit_slot.html', {'form': form})
+
+@require_POST
+def delete_slot(request, slot_id):
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    slot = get_object_or_404(AvailableSlot, id=slot_id, doctor=doctor_profile)
+    slot.delete()
+    messages.success(request, "The slot has been successfully deleted.")
+    return redirect('slots_list')

@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy
 
 # Create your models here.
 class User(AbstractUser):
@@ -41,3 +44,23 @@ class Appointments(models.Model):
 
     def __str__(self):
         return f"Appointment {self.appointment_id} - {self.doctor.user.username} with {self.patient.user.username} on {self.date} at {self.time}"
+
+class AvailableSlot(models.Model):
+    doctor = models.ForeignKey('DoctorProfile', on_delete=models.CASCADE)
+    date = models.DateField()
+    start_time = models.TimeField()
+
+    end_time = models.TimeField()
+
+    def __str__(self):
+        return f"{self.date} {self.start_time} - {self.end_time}"
+
+    def clean(self):
+        # Custom validation to ensure that the start time is before the end time
+        if self.end_time <= self.start_time:
+            raise ValidationError(gettext_lazy('End time must be after start time.'))
+
+    def save(self, *args, **kwargs):
+        # Call the custom validation method
+        self.clean()
+        super().save(*args, **kwargs)

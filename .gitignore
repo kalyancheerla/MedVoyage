@@ -3,4 +3,5 @@ __pycache__/
 .env
 *.sqlite3
 **/migrations/000**.py
-venv/**
+venv/
+.vscode/
