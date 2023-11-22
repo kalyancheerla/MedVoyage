@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy
 
@@ -33,8 +32,8 @@ class PatientProfile(models.Model):
 
 class Appointments(models.Model):
     appointment_id = models.AutoField(primary_key=True)
-    date = models.DateField(default=timezone.now)
-    time = models.TimeField(default=timezone.now)
+    booked_date = models.DateTimeField(default=timezone.now)
+    # booked_time = models.TimeField(default=timezone.now)
     patient = models.ForeignKey(
         'PatientProfile',
         on_delete=models.CASCADE,
@@ -45,10 +44,13 @@ class Appointments(models.Model):
         on_delete=models.CASCADE,
         related_name='doctor_appointments'
     )
+    appointment_date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
     details = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"Appointment {self.appointment_id} - {self.doctor.user.username} with {self.patient.user.username} on {self.date} at {self.time}"
+        return f"Appointment {self.appointment_id} - {self.doctor.user.username} with {self.patient.user.username} on {self.appointment_date} at {self.start_time}"
 
 class AvailableSlot(models.Model):
     doctor = models.ForeignKey('DoctorProfile', on_delete=models.CASCADE)

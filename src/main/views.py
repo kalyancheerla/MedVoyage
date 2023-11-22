@@ -9,6 +9,7 @@ from .utils.twilio_utils import send_sms_verification_code, check_verification_c
 from django.conf import settings
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.forms import formset_factory
+from django.utils.dateparse import parse_time
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
 from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm
 from .forms import TimeSlotForm
@@ -184,15 +185,10 @@ def patient_appointments(request):
     upcoming_appointments = []
     for appointment in appointments: 
         if appointment.patient.user.id == request.user.id:
-            if appointment.date < datetime.date.today():
-                past_appointments.append(appointment)
-            elif appointment.date > datetime.date.today():
+            if appointment.appointment_date >= datetime.date.today():
                 upcoming_appointments.append(appointment)
-            else: 
-                if appointment.time < datetime.datetime.now().time():
-                    past_appointments.append(appointment)
-                else:
-                    upcoming_appointments.append(appointment)
+            else:
+                past_appointments.append(appointment)
     return render(request, "patient_appointments.html", {'past_appointments': past_appointments, 'upcoming_appointments': upcoming_appointments})
 
 def add_slots(request):
@@ -255,9 +251,14 @@ def book_appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
+            time_slot = form.cleaned_data['time_slot']
+            start_time_str, end_time_str = time_slot.split(' - ')
             appointment = form.save(commit=False)
             # Set the patient to the current user
             appointment.patient = PatientProfile.objects.get(user=request.user)
+            appointment.start_time = parse_time(start_time_str)
+            appointment.end_time = parse_time(end_time_str)
+            appointment.booked_date = datetime.datetime.now()
             appointment.save()
             return redirect('home')  # Redirect to a confirmation or success page
     else:
@@ -273,5 +274,4 @@ def get_doctor_availability_hours(request):
     time_values = []
     for time_slot in time_slots:
         time_values.append([str(time_slot.start_time), str(time_slot.end_time)])
-    print(time_values)
     return JsonResponse({str(time_slots[0].date): time_values})
