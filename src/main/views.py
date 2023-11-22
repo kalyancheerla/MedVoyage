@@ -1,5 +1,5 @@
 import datetime
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.cache import never_cache
 from .utils.twilio_utils import send_sms_verification_code, check_verification_code
 from django.conf import settings
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.forms import formset_factory
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
 from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm
@@ -264,3 +264,14 @@ def book_appointment(request):
         form = AppointmentForm()
 
     return render(request, 'book_appointment.html', {'form': form})
+
+@login_required
+def get_doctor_availability_hours(request):
+    doctor_id = request.GET.get('doctor_id')
+    date = request.GET.get('date')
+    time_slots = get_list_or_404(AvailableSlot, doctor_id=doctor_id, date=date)
+    time_values = []
+    for time_slot in time_slots:
+        time_values.append([str(time_slot.start_time), str(time_slot.end_time)])
+    print(time_values)
+    return JsonResponse({str(time_slots[0].date): time_values})

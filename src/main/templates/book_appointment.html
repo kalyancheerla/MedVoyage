@@ -8,3 +8,24 @@
     <button type="submit">Book Appointment</button>
   </form>
 {% endblock %}
+
+{% block javascript %}
+<script>
+  document.getElementById("id_date").addEventListener("change", function() {
+      var date = this.value;
+      var doctorId = document.getElementById("id_doctor").value;
+      console.log(date, doctorId);
+      fetch(`/get-doctor-availability-hours?doctor_id=${doctorId}&date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Do something with the data
+                const parentElement = document.getElementById("id_time_slot");
+                const optionElement = document.createElement('option');
+                optionElement.value = 1;
+                optionElement.text = 'something';
+                parentElement.appendChild(optionElement);
+            })
+            .catch(error => console.error('Error:', error));
+  });
+</script>  
+{% endblock %}

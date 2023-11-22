@@ -83,9 +83,22 @@ class AppointmentForm(forms.ModelForm):
         widget=forms.Select,
         required=True
     )
+    date = forms.DateField(widget=DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+    time_slot = forms.ChoiceField(choices=[], required=True)
+
     class Meta:
         model = models.Appointments
-        fields = ['doctor', 'date', 'time', 'details']
+        fields = ['doctor', 'date', 'time_slot', 'details']
 
     def __init__(self, *args, **kwargs):
         super(AppointmentForm, self).__init__(*args, **kwargs)
+        # Dynamically update the time_slot choices based on selected doctor and date
+        if 'doctor' in self.data and 'date' in self.data:
+            try:
+                doctor_id = int(self.data.get('doctor'))
+                date = self.data.get('date')
+                available_slots = models.AvailableSlot.objects.filter(doctor_id=doctor_id, date=date)
+                time_choices = [(slot.start_time.strftime('%H:%M'), f"{slot.start_time.strftime('%H:%M')} - {slot.end_time.strftime('%H:%M')}") for slot in available_slots]
+                self.fields['time_slot'].choices = time_choices
+            except (ValueError, TypeError):
+                pass  # Invalid input from the client; ignore and fallback to empty time_slot choices
