@@ -3,10 +3,11 @@ from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 class User(AbstractUser):
-    phone = models.CharField(max_length=15, blank=True, null=True)
+    phone = PhoneNumberField(blank=True, null=True)
     security_question = models.CharField(max_length=86, blank=True, null=True)
     is_doctor = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)

@@ -2,3 +2,4 @@ Django
 mysqlclient
 django-environ
 twilio
+django-phonenumber-field[phonenumberslite]
