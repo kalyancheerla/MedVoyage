@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Book an Appointment</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Book Appointment</button>
+  </form>
+{% endblock %}
+
+{% block javascript %}
+<script>
+  document.getElementById("id_doctor").addEventListener("change", function() {
+      var doctorId = this.value;
+      var date = document.getElementById("id_appointment_date").value;
+      console.log(date, doctorId);
+
+      fetch(`/get-doctor-availability-hours?doctor_id=${doctorId}&date=${date}`)
+            .then(response => response.json())
+            .then(jsonData => {
+                console.log(jsonData); // Do something with the data
+                const parentElement = document.getElementById("id_time_slot");
+                // Clear existing options
+                while (parentElement.firstChild) {
+                    parentElement.removeChild(parentElement.firstChild);
+                }
+                for (const dateItem of jsonData[date]) {
+                    // Create a new <option> element
+                    const optionElement = document.createElement('option');
+
+                    // Set the value and text content of the option
+                    optionElement.value = dateItem[0].toString() + ' - ' + dateItem[1].toString();
+                    console.log(optionElement.value)
+                    optionElement.text = dateItem[0].toString() + ' - ' + dateItem[1].toString();
+
+                    // Append the <option> element to the parent <select> element
+                    parentElement.appendChild(optionElement);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+  });
+</script>  
+{% endblock %}

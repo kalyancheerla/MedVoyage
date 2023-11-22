@@ -24,5 +24,7 @@ urlpatterns = [
     path('slots/', views.slots_list, name='slots_list'),
     path('slots/edit/<int:slot_id>/', views.edit_slot, name='edit_slot'),
     path('slots/delete/<int:slot_id>/', views.delete_slot, name='delete_slot'),
+    path('book-appointment/', views.book_appointment, name='book_appointment'),
+    path('get-doctor-availability-hours/', views.get_doctor_availability_hours, name='get_doctor_availability_hours'),
 
 ]

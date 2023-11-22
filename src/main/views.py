@@ -1,19 +1,19 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout, get_user_model
-from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm, VerificationForm
-from .forms import UpdateDoctorForm, TimeSlotForm
-from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
+import datetime
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib import messages
-from django.contrib.auth import get_user_model
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.forms import formset_factory
+from django.views.decorators.cache import never_cache
 from .utils.twilio_utils import send_sms_verification_code, check_verification_code
 from django.conf import settings
-from django.views.decorators.cache import never_cache
-import datetime
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, JsonResponse
+from django.forms import formset_factory
+from django.utils.dateparse import parse_time
+from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
+from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm
+from .forms import TimeSlotForm
+from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
 
 def home(request):
     return render(request, "index.html")
@@ -185,15 +185,10 @@ def patient_appointments(request):
     upcoming_appointments = []
     for appointment in appointments: 
         if appointment.patient.user.id == request.user.id:
-            if appointment.date < datetime.date.today():
-                past_appointments.append(appointment)
-            elif appointment.date > datetime.date.today():
+            if appointment.appointment_date >= datetime.date.today():
                 upcoming_appointments.append(appointment)
-            else: 
-                if appointment.time < datetime.datetime.now().time():
-                    past_appointments.append(appointment)
-                else:
-                    upcoming_appointments.append(appointment)
+            else:
+                past_appointments.append(appointment)
     return render(request, "patient_appointments.html", {'past_appointments': past_appointments, 'upcoming_appointments': upcoming_appointments})
 
 def add_slots(request):
@@ -250,3 +245,33 @@ def delete_slot(request, slot_id):
     slot.delete()
     messages.success(request, "The slot has been successfully deleted.")
     return redirect('slots_list')
+
+@login_required
+def book_appointment(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            time_slot = form.cleaned_data['time_slot']
+            start_time_str, end_time_str = time_slot.split(' - ')
+            appointment = form.save(commit=False)
+            # Set the patient to the current user
+            appointment.patient = PatientProfile.objects.get(user=request.user)
+            appointment.start_time = parse_time(start_time_str)
+            appointment.end_time = parse_time(end_time_str)
+            appointment.booked_date = datetime.datetime.now()
+            appointment.save()
+            return redirect('home')  # Redirect to a confirmation or success page
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'book_appointment.html', {'form': form})
+
+@login_required
+def get_doctor_availability_hours(request):
+    doctor_id = request.GET.get('doctor_id')
+    date = request.GET.get('date')
+    time_slots = get_list_or_404(AvailableSlot, doctor_id=doctor_id, date=date)
+    time_values = []
+    for time_slot in time_slots:
+        time_values.append([str(time_slot.start_time), str(time_slot.end_time)])
+    return JsonResponse({str(time_slots[0].date): time_values})
