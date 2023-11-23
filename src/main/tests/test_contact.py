@@ -30,17 +30,17 @@ class ContactUsTestCases(TestCase):
         # Phone
         self.assertContains(response, "fa-phone")
         self.assertContains(response, "<h4>Phone</h4>")
-        self.assertContains(response, "<p>+123 456 7890</p>")
+        self.assertContains(response, "<p>(+1) 214-89-22196</p>")
 
         # Email
         self.assertContains(response, "fa-envelope")
         self.assertContains(response, "<h4>Email</h4>")
-        self.assertContains(response, "<p>contact@medvoyage.com</p>")
+        self.assertContains(response, "<p>medvoyage.service@gmail.com</p>")
 
         # Location
         self.assertContains(response, "fa-map-marker")
         self.assertContains(response, "<h4>Location</h4>")
-        self.assertContains(response, "<p>123 Street, Denton, United States</p>")
+        self.assertContains(response, "<p>Discovery Park, N Elm Street, Denton, TX, US.</p>")
 
     def test_contact_message(self):
         response = self.client.get('/contact/')
