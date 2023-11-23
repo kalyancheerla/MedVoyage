@@ -87,5 +87,5 @@ class SignupTemplateTest(TestCase):
     def test_submit_button_rendered(self):
         response = self.client.get('/signup/')  # Adjust the URL as per your project
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, '<button type="submit" class="btn btn-primary col-mt-3 mx-auto">Sign-Up</button>')
+        self.assertContains(response, '<button type="submit" class="btn btn-primary col-mt-3 mx-auto btn-mv-green">Sign-Up</button>')
 
