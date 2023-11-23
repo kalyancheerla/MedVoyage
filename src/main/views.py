@@ -277,8 +277,8 @@ def book_appointment(request):
 def get_doctor_availability_hours(request):
     doctor_id = request.GET.get('doctor_id')
     date = request.GET.get('date')
-    time_slots = get_list_or_404(AvailableSlot, doctor_id=doctor_id, date=date)
+    time_slots = AvailableSlot.objects.filter(doctor_id=doctor_id, date=date)
     time_values = []
     for time_slot in time_slots:
         time_values.append([str(time_slot.start_time), str(time_slot.end_time)])
-    return JsonResponse({str(time_slots[0].date): time_values})
+    return JsonResponse({str(date): time_values})
