@@ -10,6 +10,7 @@ from django.conf import settings
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.forms import formset_factory
 from django.utils.dateparse import parse_time
+from django.core.mail import send_mail
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
 from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm
 from .forms import TimeSlotForm
@@ -132,14 +133,20 @@ def about_us(request):
     return render(request, "about_us.html", {'developers': developers})
 
 def contact_us(request):
-    return render(request,"contact_us.html")
-
-def contact_us_form_submit(request):
     if request.method == 'POST':
-        # Need to handle the form submission logic here
-        # For now, just redirecting to the same contact us page
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        try:
+            send_mail(f'DoNotReply | {name} dropped a message on MedVoyage Contact Us',
+                    f'Hi {name},\n\nWe had received your below message and our team would contact you soon...\n\n'\
+                    f'"{message}"\n\nRegards,\nMedVoyage Service Team.',
+                    settings.EMAIL_HOST_USER,
+                    [email])
+        except:
+            pass
         return redirect('contact_us')
-    return render(request, 'contact_us.html')
+    return render(request,"contact_us.html")
 
 def signout(request):
     logout(request)
