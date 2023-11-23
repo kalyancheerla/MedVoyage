@@ -80,10 +80,10 @@ class ResetPasswordTestCases(TestCase):
         self.assertContains(response, '<input type="text" class="form-control form-control-lg" id="id_username" name="username" placeholder="JohnDoe">')
         self.assertContains(response, '<label for="id_password">New Password</label>')
         self.assertContains(response, '<input type="password" class="form-control form-control-lg" id="id_password" name="new_password" placeholder="Enter your new password">')
-        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center">Reset</button>')
+        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center btn-mv-green">Reset</button>')
         # links
-        self.assertContains(response, '<a href="/signup/">Don\'t have an account? Sign Up Here</a>')
-        self.assertNotContains(response, '<a href="/reset_password/">Forgot Password? Reset Here</a>')
+        self.assertContains(response, '<a class="text-mv-green" href="/signup/">Don\'t have an account? Sign Up Here</a>')
+        self.assertNotContains(response, '<a class="text-mv-green" href="/reset_password/">Forgot Password? Reset Here</a>')
 
     def test_resetpassword_wrong_secquestion(self):
         # signup login signout
