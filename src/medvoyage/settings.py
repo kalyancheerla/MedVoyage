@@ -18,6 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Get environmental variables
 env = environ.Env(
+    DEBUG=(bool, True),
     ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
     DB_ENGINE=(str, 'django.db.backends.sqlite3'),
     EMAIL_HOST_USER=(str, ''),
@@ -35,7 +36,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = 'django-insecure-#xfxx02-4!fh83+qkbd4)8(v&$uijmgdkjeh1)-nvjk9co!2*w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
