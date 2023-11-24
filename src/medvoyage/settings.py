@@ -23,6 +23,8 @@ env = environ.Env(
     EMAIL_HOST_USER=(str, ''),
     EMAIL_HOST_PASSWORD=(str, ''),
     TWO_FACTOR_AUTH=(bool, False),
+    CSRF_COOKIE_SECURE=(bool, False),
+    CSRF_TRUSTED_ORIGINS=(list, []),
 )
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -139,6 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/main/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -165,3 +168,6 @@ if TWO_FACTOR_AUTH == True:
     TWILIO_VERIFY_SID = env('TWILIO_VERIFY_SID')
     TWILIO_PHONE_NUMBER = env('TWILIO_PHONE_NUMBER')
 
+# Extra CSRF config for HTTPS
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
