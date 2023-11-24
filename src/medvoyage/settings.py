@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Get environmental variables
 env = environ.Env(
-    MY_ALLOWED_IP=(str, '127.0.0.1'),
+    ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
     DB_ENGINE=(str, 'django.db.backends.sqlite3'),
     EMAIL_HOST_USER=(str, ''),
     EMAIL_HOST_PASSWORD=(str, ''),
@@ -35,7 +35,7 @@ SECRET_KEY = 'django-insecure-#xfxx02-4!fh83+qkbd4)8(v&$uijmgdkjeh1)-nvjk9co!2*w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [env('MY_ALLOWED_IP')]
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition
