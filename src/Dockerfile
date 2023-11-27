@@ -1,3 +1,7 @@
+# Commands to build and run
+# $ docker build -t medvoyage .
+# $ docker run -d --name medvoyage -p 8000:8000 medvoyage:latest
+
 # Use an official Python runtime as a parent image
 FROM python:latest
 LABEL maintainer="KalyanCheerla@my.unt.edu"
@@ -10,6 +14,9 @@ COPY . /app
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
+
+# Execute the DB migration setup
+RUN python manage.py makemigrations && python manage.py migrate
 
 # Open Port
 EXPOSE 8000
