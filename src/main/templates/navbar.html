@@ -1,6 +1,4 @@
-<!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d9d9d9;">
-    <!-- Brand Logo and Name -->
    {% if user.is_authenticated %}
         {% if user.is_doctor %}
         <a class="navbar-brand" href="{% url 'doctor_dashboard' %}">
@@ -23,7 +21,6 @@
         </a>
     {% endif %}
 
-    <!-- Toggler for Mobile Devices -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -31,14 +28,12 @@
 
     <div class="collapse navbar-collapse me-lg-3" id="navbarNav">
         <ul class="navbar-nav ms-lg-auto">
-            <!-- About and Contact Links -->
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
             </li>
-            <!-- Login/Signup,Profile-->
             {% if user.is_authenticated %}
                 {% if user.is_doctor %}
                 <li class="nav-item">
@@ -54,13 +49,12 @@
                     <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
                 </li>
             {% endif %}
-            <!-- Sign Out Button -->
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a href="{% url 'patient_appointments' %}" class="nav-link" >Patient Appointments</a>
+                <a href="{% url 'patient_appointments' %}" class="nav-link">Patient Appointments</a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'signout' %}" class="nav-link" > Sign Out</a>
+                <a href="{% url 'signout' %}" class="nav-link">Sign Out</a>
             </li>
             {% endif %}
         </ul>

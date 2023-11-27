@@ -36,7 +36,7 @@ class ClientUpdateFormTestCases(TestCase):
 
         # Check if the form submission is successful and redirects to the expected page
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/client_profile/') 
+        self.assertRedirects(response, '/client_profile/')
 
         # Check if the user's information is updated in the database
         updated_user = User.objects.get(username='johndoe')
@@ -44,5 +44,5 @@ class ClientUpdateFormTestCases(TestCase):
         self.assertEqual(updated_user.last_name, 'NewLastName')
         self.assertEqual(updated_user.phone, '1234567890')
         self.assertEqual(updated_user.email, 'newemail@example.com')
-        
-    
+
+

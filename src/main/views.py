@@ -148,16 +148,20 @@ def contact_us(request):
         return redirect('contact_us')
     return render(request,"contact_us.html")
 
+@login_required
 def signout(request):
     logout(request)
     return redirect(home)
 
+@login_required
 def client_dashboard(request):
     return render(request, "clientdashboard.html")
 
+@login_required
 def client_profile(request):
     return render(request, "clientprofile.html")
 
+@login_required
 def update_patient_info(request):
     if request.method == 'POST':
         form = UpdatePatientForm(request.POST, instance=request.user)
@@ -167,13 +171,16 @@ def update_patient_info(request):
     else:
        form = UpdatePatientForm(instance=request.user)
     return render(request, 'clientupdateform.html')
-    
+
+@login_required
 def doctor_dashboard(request):
     return render(request, "doctordashboard.html")
 
+@login_required
 def doctor_profile(request):
     return render(request, "doctor_profile.html")
 
+@login_required
 def update_doctor_info(request):
     if request.method == 'POST':
         form = UpdateDoctorForm(request.POST, instance=request.user)
@@ -184,6 +191,7 @@ def update_doctor_info(request):
        form = UpdateDoctorForm(instance=request.user)
     return render(request, 'update_doctor_info.html')
 
+@login_required
 def patient_appointments(request):
     if not request.user.is_authenticated:
         return HttpResponseBadRequest('Missing required field: required_field')
@@ -198,6 +206,7 @@ def patient_appointments(request):
                 past_appointments.append(appointment)
     return render(request, "patient_appointments.html", {'past_appointments': past_appointments, 'upcoming_appointments': upcoming_appointments})
 
+@login_required
 def add_slots(request):
     TimeSlotFormSet = formset_factory(TimeSlotForm, extra=1)
     if request.method == 'POST':
@@ -225,15 +234,18 @@ def add_slots(request):
         formset = TimeSlotFormSet()
         return render(request, 'add_slots.html', {'formset': formset})
 
+@login_required
 def success(request):
     return render(request, 'success.html')
 
+@login_required
 @never_cache
 def slots_list(request):
     slots = AvailableSlot.objects.filter(doctor__user=request.user).order_by('date', 'start_time')
     no_slots_available = not slots.exists()  # True if no slots are available
     return render(request, 'slots_list.html', {'slots': slots, 'no_slots_available': no_slots_available})
 
+@login_required
 def edit_slot(request, slot_id):
     slot = get_object_or_404(AvailableSlot, id=slot_id)
     if request.method == 'POST':
@@ -245,6 +257,7 @@ def edit_slot(request, slot_id):
         form = TimeSlotForm(instance=slot)
     return render(request, 'edit_slot.html', {'form': form})
 
+@login_required
 @require_POST
 def delete_slot(request, slot_id):
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)

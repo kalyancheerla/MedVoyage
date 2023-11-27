@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 
-NavBar_Fields = ["MedVoyage", "About", "Contact", "Login/Signup"]
+NavBar_Fields = ["MedVoyage", "About", "Contact"]
 
 # Create your tests here.
 class LoginTestCases(TestCase):
@@ -14,7 +14,7 @@ class LoginTestCases(TestCase):
         # title
         self.assertContains(response, "MedVoyage | Login")
         # nav fields
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
         # footer
         self.assertContains(response, "<p>&copy; MedVoyage</p>")
@@ -84,7 +84,7 @@ class LoginTestCases(TestCase):
         # title
         self.assertContains(response, "MedVoyage | Login")
         # nav fields
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
         # footer
         self.assertContains(response, "<p>&copy; MedVoyage</p>")
@@ -109,7 +109,7 @@ class LoginTestCases(TestCase):
         # title
         self.assertContains(response, "MedVoyage | Login")
         # nav fields
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
         # footer
         self.assertContains(response, "<p>&copy; MedVoyage</p>")

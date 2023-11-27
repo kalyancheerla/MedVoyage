@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 
-NavBar_Fields = ["MedVoyage", "About", "Contact", "Login/Signup"]
+NavBar_Fields = ["MedVoyage", "About", "Contact"]
 
 # Create your tests here.
 class LogoutTestCases(TestCase):
@@ -31,7 +31,7 @@ class LogoutTestCases(TestCase):
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)
         # nav fields
-        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link">Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/signout/')
@@ -61,7 +61,7 @@ class LogoutTestCases(TestCase):
         response = self.client.get('/home/')
         self.assertEqual(response.status_code, 200)
         # nav field
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
 
         self.assertNotContains(response, '<a href="/signout/" class="nav-link" > Sign Out</a>')
@@ -89,12 +89,12 @@ class LogoutTestCases(TestCase):
 
         response = self.client.get('/about/')
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link">Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/contact/')
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link">Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/signout/')

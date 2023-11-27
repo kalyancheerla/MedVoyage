@@ -26,5 +26,5 @@ class HomeViewTestCases(TestCase):
     def test_content_display(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'MedVoyage')  
-        self.assertContains(response, 'Your journey to health begins here: Navigating Wellness with MedVoyage.') 
+        self.assertContains(response, 'MedVoyage')
+        self.assertContains(response, 'Your journey to health begins here: Navigating Wellness with MedVoyage.')

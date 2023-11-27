@@ -3,7 +3,7 @@ from django.test import TestCase, Client
 class PatientUpcomingAndPastAppointmentsTestCases(TestCase):
     def setUp(self):
         self.client = Client()
-    
+
     def test_appt_page(self):
         response = self.client.post('/signup/', data={
             'username': 'pspk',
@@ -25,7 +25,7 @@ class PatientUpcomingAndPastAppointmentsTestCases(TestCase):
         self.assertEqual(response.status_code, 302)
         response = self.client.get('/client_appointments/')
         self.assertEqual(response.status_code, 200)
-    
+
     def test_appt_nav(self):
         response = self.client.post('/signup/', data={
             'username': 'pspk',
@@ -52,7 +52,7 @@ class PatientUpcomingAndPastAppointmentsTestCases(TestCase):
         response = self.client.get('/home/')
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "Patient Appointments")
-       
+
     def test_no_appt_listing_when_no_appt_made(self):
         response = self.client.post('/signup/', data={
             'username': 'pspk',
