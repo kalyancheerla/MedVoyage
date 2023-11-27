@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 
-NavBar_Fields = ["MedVoyage", "About", "Contact", "Login/Signup"]
+NavBar_Fields = ["MedVoyage", "About", "Contact", "Login/Signup", "Help"]
 
 # Create your tests here.
 class HomeViewTestCases(TestCase):

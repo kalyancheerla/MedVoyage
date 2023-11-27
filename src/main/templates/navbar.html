@@ -57,6 +57,10 @@
                 <a href="{% url 'signout' %}" class="nav-link">Sign Out</a>
             </li>
             {% endif %}
+            <li class="nav-item">
+                {% load static %}
+                <a href="{% static "docs/UserManual.pdf" %}" class="nav-link">Help</a>
+            </li>
         </ul>
     </div>
 </nav>
