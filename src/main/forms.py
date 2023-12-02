@@ -29,7 +29,7 @@ class SignupForm(forms.ModelForm):
     def clean_phone(self):
         phone = self.cleaned_data.get('phone')
         if phone and not re.match(r'^\+?1?(\d{10}|\d{3}-\d{3}-\d{4})$', phone):
-            raise ValidationError("Phone number must be entered in the format: '+1999999999'. Up to 10 digits allowed.")
+            raise ValidationError("Required phonenumber format: '+15555555555' or '5555555555' or '555-555-5555'")
         return phone
 
     def clean_password2(self):
