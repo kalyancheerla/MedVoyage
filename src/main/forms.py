@@ -1,3 +1,4 @@
+import re
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy
@@ -24,6 +25,12 @@ class SignupForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone and not re.match(r'^\+?1?(\d{10}|\d{3}-\d{3}-\d{4})$', phone):
+            raise ValidationError("Phone number must be entered in the format: '+1999999999'. Up to 10 digits allowed.")
+        return phone
 
     def clean_password2(self):
         cd = self.cleaned_data
