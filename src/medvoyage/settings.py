@@ -18,10 +18,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Get environmental variables
 env = environ.Env(
-    MY_ALLOWED_IP=(str, '127.0.0.1'),
+    DEBUG=(bool, True),
+    ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
     DB_ENGINE=(str, 'django.db.backends.sqlite3'),
     EMAIL_HOST_USER=(str, ''),
     EMAIL_HOST_PASSWORD=(str, ''),
+    TWO_FACTOR_AUTH=(bool, False),
+    CSRF_COOKIE_SECURE=(bool, False),
+    CSRF_TRUSTED_ORIGINS=(list, []),
 )
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -32,9 +36,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = 'django-insecure-#xfxx02-4!fh83+qkbd4)8(v&$uijmgdkjeh1)-nvjk9co!2*w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = [env('MY_ALLOWED_IP')]
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -138,6 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/main/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -156,3 +161,14 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
+# Twilio Setup
+TWO_FACTOR_AUTH = env.bool('TWO_FACTOR_AUTH')
+if TWO_FACTOR_AUTH == True:
+    TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
+    TWILIO_AUTH_TOKEN = env('TWILIO_AUTH_TOKEN')
+    TWILIO_VERIFY_SID = env('TWILIO_VERIFY_SID')
+    TWILIO_PHONE_NUMBER = env('TWILIO_PHONE_NUMBER')
+
+# Extra CSRF config for HTTPS
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE')
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')

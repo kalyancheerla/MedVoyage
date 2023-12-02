@@ -1,30 +1,46 @@
 {% extends 'base.html' %}
 
-{% block title %}MedVoyage | Book Appointment{% endblock %}
+{% block title %}Book Appointment{% endblock %}
 
 {% block content %}
-    <div>
-        <form id="book-form" method="post">
-            {% csrf_token %}
-            <h2>Book Appointment</h2>
-            <div class="form-group">
-                <label for="id_date" class="m-1">Appointment Date</label>
-                <input type="text" class="form-control form-control-lg mb-2" id="id_date" name="date" placeholder="(MM/DD/YYYY)">
-            </div>
+  <h2>Book an Appointment</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Book Appointment</button>
+  </form>
+{% endblock %}
 
-            <div class="form-group">
-                <label for="id_time" class="m-1">Appointment Time (24 HR)</label>
-                <input type="text" class="form-control form-control-lg mb-2" id="id_time" name="time" placeholder="ex: 14:30">
-            </div>
+{% block javascript %}
+<script>
+  document.getElementById("id_doctor").addEventListener("change", function() {
+      var doctorId = this.value;
+      var date = document.getElementById("id_appointment_date").value;
+      console.log(date, doctorId);
 
-            <!-- temporary implementation until tables and calendar widget are done. id will be pulled from logged in user info -->
-            <div class="form-group">
-                <label for="id_details" class="m-1">Appointment Details</label>
-                <input type="text" class="form-control form-control-lg mb-2" id="id_details" name="details" placeholder="Enter apppointment details here">
-            </div>
+      fetch(`/get-doctor-availability-hours?doctor_id=${doctorId}&date=${date}`)
+            .then(response => response.json())
+            .then(jsonData => {
+                console.log(jsonData); // Do something with the data
+                const parentElement = document.getElementById("id_time_slot");
+                // Clear existing options
+                while (parentElement.firstChild) {
+                    parentElement.removeChild(parentElement.firstChild);
+                }
+                for (const dateItem of jsonData[date]) {
+                    // Create a new <option> element
+                    const optionElement = document.createElement('option');
 
-            <button type="submit" class="btn btn-mv-green btn-block text-center mt-2 text-white">Book Appointment</button>
-        </form>
+                    // Set the value and text content of the option
+                    optionElement.value = dateItem[0].toString() + ' - ' + dateItem[1].toString();
+                    console.log(optionElement.value)
+                    optionElement.text = dateItem[0].toString() + ' - ' + dateItem[1].toString();
 
-    </div>
+                    // Append the <option> element to the parent <select> element
+                    parentElement.appendChild(optionElement);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+  });
+</script>  
 {% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Add Available Slots</h2>
+    <form method="post" id="slotsForm">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <div id="formset-container">
+            <!-- The initial form fields from the formset will be rendered here -->
+            {% for form in formset %}
+                <div class="form-group mb-3">
+                    {{ form.date.label_tag }} {{ form.date }}
+                    {{ form.start_time.label_tag }} {{ form.start_time }}
+                    {{ form.end_time.label_tag }} {{ form.end_time }}
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-more-slots" class="btn btn-outline-secondary mt-3">Add More</button>
+        <button type="submit" class="btn btn-primary mt-3">Save Slots</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/template" id="empty-form-template">
+    {% autoescape off %}
+    {{ formset.empty_form }}
+    {% endautoescape %}
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const formsetContainer = document.getElementById('formset-container');
+    const addButton = document.getElementById('add-more-slots');
+    const emptyFormTemplate = document.getElementById('empty-form-template').innerHTML;
+    let formCount = formsetContainer.children.length;
+
+    function createSlotForm() {
+        let newFormHtml = emptyFormTemplate.replace(/__prefix__/g, formCount);
+        formsetContainer.insertAdjacentHTML('beforeend', newFormHtml);
+        formCount++;
+        document.getElementById('id_form-TOTAL_FORMS').value = formCount.toString();
+    }
+
+    addButton.addEventListener('click', createSlotForm);
+});
+</script>
+{% endblock %}

@@ -1,12 +1,18 @@
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <!-- Brand Logo and Name -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d9d9d9;">
    {% if user.is_authenticated %}
+        {% if user.is_doctor %}
+        <a class="navbar-brand" href="{% url 'doctor_dashboard' %}">
+            {% load static %}
+            <img src={% static "images/MedVoyageLogo.png" %} width="30" height="30" class="d-inline-block align-top" alt="Logo">
+            MedVoyage
+        </a>
+        {% else %}
         <a class="navbar-brand" href="{% url 'client_dashboard' %}">
             {% load static %}
             <img src={% static "images/MedVoyageLogo.png" %} width="30" height="30" class="d-inline-block align-top" alt="Logo">
             MedVoyage
-        </a> 
+        </a>
+        {% endif %}
     {% else %}
         <a class="navbar-brand" href="{% url 'home' %}">
             {% load static %}
@@ -15,7 +21,6 @@
         </a>
     {% endif %}
 
-    <!-- Toggler for Mobile Devices -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -23,29 +28,39 @@
 
     <div class="collapse navbar-collapse me-lg-3" id="navbarNav">
         <ul class="navbar-nav ms-lg-auto">
-            <!-- About and Contact Links -->
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
             </li>
-            <!-- Login/Signup,Profile-->
             {% if user.is_authenticated %}
+                {% if user.is_doctor %}
+                <li class="nav-item">
+                    <a href="{% url 'doctor_profile' %}" class="nav-link fw-bold text-mv-green">Profile</a>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a href="{% url 'client_profile' %}" class="nav-link fw-bold text-mv-green">Profile</a>
                 </li>
+                {% endif %}
             {% else %}
                 <li class="nav-item">
                     <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
                 </li>
             {% endif %}
-            <!-- Sign Out Button -->
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a href="/signout" class="nav-link" > Sign Out</a>
+                <a href="{% url 'patient_appointments' %}" class="nav-link">Patient Appointments</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'signout' %}" class="nav-link">Sign Out</a>
             </li>
             {% endif %}
+            <li class="nav-item">
+                {% load static %}
+                <a href="{% static "docs/UserManual.pdf" %}" class="nav-link">Help</a>
+            </li>
         </ul>
     </div>
 </nav>

@@ -1,13 +1,10 @@
 from django.test import TestCase, Client
 
-NavBar_Fields = ["MedVoyage", "About", "Contact"]
-
-# Create your tests here.
-class LogoutTestCases(TestCase):
+class PatientUpcomingAndPastAppointmentsTestCases(TestCase):
     def setUp(self):
         self.client = Client()
 
-    def test_logout_success(self):
+    def test_appt_page(self):
         response = self.client.post('/signup/', data={
             'username': 'pspk',
             'first_name': 'pk',
@@ -26,19 +23,10 @@ class LogoutTestCases(TestCase):
             'password': 'idk',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/doctor_dashboard/')
-
-        response = self.client.get(response.url)
+        response = self.client.get('/client_appointments/')
         self.assertEqual(response.status_code, 200)
-        # nav fields
-        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link">Sign Out</a>']:
-            self.assertContains(response, nav_field)
 
-        response = self.client.get('/signout/')
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/home/')
-
-    def test_logout_notpresent(self):
+    def test_appt_nav(self):
         response = self.client.post('/signup/', data={
             'username': 'pspk',
             'first_name': 'pk',
@@ -51,22 +39,21 @@ class LogoutTestCases(TestCase):
             'login_type': 'doctor',
         })
         self.assertEqual(response.status_code, 302)
-
         response = self.client.post('/login/', data={
             'username': 'pspk',
-            'password': 'password',
+            'password': 'idk',
         })
-        self.assertEqual(response.status_code, 200)
-
+        self.assertEqual(response.status_code, 302)
         response = self.client.get('/home/')
         self.assertEqual(response.status_code, 200)
-        # nav field
-        for nav_field in NavBar_Fields + ["Login/Signup"]:
-            self.assertContains(response, nav_field)
+        self.assertContains(response, "Patient Appointments")
 
-        self.assertNotContains(response, '<a href="/signout/" class="nav-link" > Sign Out</a>')
+    def test_appt_no_nav_logged_out(self):
+        response = self.client.get('/home/')
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "Patient Appointments")
 
-    def test_logout_present_in_about_contact_pages(self):
+    def test_no_appt_listing_when_no_appt_made(self):
         response = self.client.post('/signup/', data={
             'username': 'pspk',
             'first_name': 'pk',
@@ -79,24 +66,16 @@ class LogoutTestCases(TestCase):
             'login_type': 'doctor',
         })
         self.assertEqual(response.status_code, 302)
-
         response = self.client.post('/login/', data={
             'username': 'pspk',
             'password': 'idk',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/doctor_dashboard/')
-
-        response = self.client.get('/about/')
+        response = self.client.get('/client_appointments/')
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link">Sign Out</a>']:
-            self.assertContains(response, nav_field)
+        self.assertContains(response, "No Upcoming Appointments")
 
-        response = self.client.get('/contact/')
-        self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link">Sign Out</a>']:
-            self.assertContains(response, nav_field)
+    def test_page_inaccessible_when_not_logged_in(self):
+        response = self.client.get('/client_appointments/')
+        self.assertNotEqual(response.status_code, 200)
 
-        response = self.client.get('/signout/')
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/home/')

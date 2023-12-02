@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}MedVoyage | Login{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
+<div style="background-color: #fff;">
     <div class="container">
-        <div class="row justify-content-center align-items-center" style="height: 100vh;">
+        <div class="row justify-content-center align-items-center" style="min-height: 84vh;">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
@@ -21,13 +22,13 @@
                                 <input type="password" class="form-control form-control-lg" id="id_password" name="password" placeholder="Enter your password">
                             </div>
 
-                            <button type="submit" class="btn btn-mv-green btn-block text-center mt-2 text-white">Login</button>
-                            
-                            <div class="text-center m-2">
-                                <a href="{% url 'signup' %}">Don't have an account? Sign Up Here</a>
+                            <button type="submit" class="btn btn-primary btn-block text-center mt-2 btn-mv-green">Login</button>
+
+                            <div class="text-center">
+                                <a class="text-mv-green" href="{% url 'signup' %}">Don't have an account? Sign Up Here</a>
                             </div>
-                            <div class="text-center m-2">
-                                <a href="{% url 'reset_password' %}">Forgot Password? Reset Here</a>
+                            <div class="text-center">
+                                <a class="text-mv-green" href="{% url 'reset_password' %}">Forgot Password? Reset Here</a>
                             </div>
                         </form>
                     </div>
@@ -35,4 +36,5 @@
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

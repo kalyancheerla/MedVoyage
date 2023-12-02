@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 
-NavBar_Fields = ["MedVoyage", "About", "Contact", "Login/Signup"]
+NavBar_Fields = ["MedVoyage", "About", "Contact"]
 
 # Create your tests here.
 class LoginTestCases(TestCase):
@@ -14,7 +14,7 @@ class LoginTestCases(TestCase):
         # title
         self.assertContains(response, "MedVoyage | Login")
         # nav fields
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
         # footer
         self.assertContains(response, "<p>&copy; MedVoyage</p>")
@@ -25,10 +25,10 @@ class LoginTestCases(TestCase):
         self.assertContains(response, '<input type="text" class="form-control form-control-lg mb-2" id="id_username" name="username" placeholder="JohnDoe">')
         self.assertContains(response, '<label for="id_password">Password</label>')
         self.assertContains(response, '<input type="password" class="form-control form-control-lg" id="id_password" name="password" placeholder="Enter your password">')
-        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center mt-2">Login</button>')
+        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center mt-2 btn-mv-green">Login</button>')
         # links
-        self.assertContains(response, '<a href="/signup/">Don\'t have an account? Sign Up Here</a>')
-        self.assertContains(response, '<a href="/reset_password/">Forgot Password? Reset Here</a>')
+        self.assertContains(response, '<a class="text-mv-green" href="/signup/">Don\'t have an account? Sign Up Here</a>')
+        self.assertContains(response, '<a class="text-mv-green" href="/reset_password/">Forgot Password? Reset Here</a>')
 
     def test_login_success(self):
         response = self.client.post('/signup/', data={
@@ -84,7 +84,7 @@ class LoginTestCases(TestCase):
         # title
         self.assertContains(response, "MedVoyage | Login")
         # nav fields
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
         # footer
         self.assertContains(response, "<p>&copy; MedVoyage</p>")
@@ -95,10 +95,10 @@ class LoginTestCases(TestCase):
         self.assertContains(response, '<input type="text" class="form-control form-control-lg mb-2" id="id_username" name="username" placeholder="JohnDoe">')
         self.assertContains(response, '<label for="id_password">Password</label>')
         self.assertContains(response, '<input type="password" class="form-control form-control-lg" id="id_password" name="password" placeholder="Enter your password">')
-        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center mt-2">Login</button>')
+        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center mt-2 btn-mv-green">Login</button>')
         # links
-        self.assertContains(response, '<a href="/signup/">Don\'t have an account? Sign Up Here</a>')
-        self.assertContains(response, '<a href="/reset_password/">Forgot Password? Reset Here</a>')
+        self.assertContains(response, '<a class="text-mv-green" href="/signup/">Don\'t have an account? Sign Up Here</a>')
+        self.assertContains(response, '<a class="text-mv-green" href="/reset_password/">Forgot Password? Reset Here</a>')
 
     def test_login_without_signup(self):
         response = self.client.post('/login/', data={
@@ -109,7 +109,7 @@ class LoginTestCases(TestCase):
         # title
         self.assertContains(response, "MedVoyage | Login")
         # nav fields
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
         # footer
         self.assertContains(response, "<p>&copy; MedVoyage</p>")
@@ -120,8 +120,8 @@ class LoginTestCases(TestCase):
         self.assertContains(response, '<input type="text" class="form-control form-control-lg mb-2" id="id_username" name="username" placeholder="JohnDoe">')
         self.assertContains(response, '<label for="id_password">Password</label>')
         self.assertContains(response, '<input type="password" class="form-control form-control-lg" id="id_password" name="password" placeholder="Enter your password">')
-        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center mt-2">Login</button>')
+        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center mt-2 btn-mv-green">Login</button>')
         # links
-        self.assertContains(response, '<a href="/signup/">Don\'t have an account? Sign Up Here</a>')
-        self.assertContains(response, '<a href="/reset_password/">Forgot Password? Reset Here</a>')
+        self.assertContains(response, '<a class="text-mv-green" href="/signup/">Don\'t have an account? Sign Up Here</a>')
+        self.assertContains(response, '<a class="text-mv-green" href="/reset_password/">Forgot Password? Reset Here</a>')
 

@@ -42,14 +42,14 @@ class AboutUsTestCases(TestCase):
 
     def test_about_dev_list(self):
         developers = [
-            {'name': 'Kalyan Cheerla', 'bio': 'Project Manager', 'image': 'images/ProfilePic.jpg'},
-            {'name': 'Bhavani Rachakatla', 'bio': 'Design and Testing Lead', 'image': 'images/ProfilePic.jpg'},
-            {'name': 'Yasmeen Haleem', 'bio': 'Requirements and Documentation Lead', 'image': 'images/ProfilePic.jpg'},
-            {'name': 'Demir Altay', 'bio': 'Implementation Lead(backend)', 'image': 'images/ProfilePic.jpg'},
-            {'name': 'Vidhi Bhatt', 'bio': 'Implementation Lead(front end)', 'image': 'images/ProfilePic.jpg'},
-            {'name': 'Emmie Abels', 'bio': 'Implementation Lead(front end)', 'image': 'images/ProfilePic.jpg'},
-            {'name': 'Manushree Buyya', 'bio': 'Demo and Presentation Lead', 'image': 'images/ProfilePic.jpg'},
-            {'name': 'Pravallika Bollavaram', 'bio': 'Configuration Management Lead', 'image': 'images/ProfilePic.jpg'},
+            {'name': 'Kalyan Cheerla', 'bio': 'Project Manager', 'image': 'https://avatars.githubusercontent.com/u/32354220'},
+            {'name': 'Bhavani Rachakatla', 'bio': 'Design and Testing Lead', 'image': 'https://avatars.githubusercontent.com/u/28670100'},
+            {'name': 'Yasmeen Haleem', 'bio': 'Requirements and Documentation Lead', 'image': 'https://avatars.githubusercontent.com/u/62796535'},
+            {'name': 'Demir Altay', 'bio': 'Implementation Lead(backend)', 'image': 'https://avatars.githubusercontent.com/u/77849115'},
+            {'name': 'Vidhi Bhatt', 'bio': 'Implementation Lead(front end)', 'image': 'https://avatars.githubusercontent.com/u/113860102'},
+            {'name': 'Emmie Abels', 'bio': 'Implementation Lead(front end)', 'image': 'https://avatars.githubusercontent.com/u/36717379'},
+            {'name': 'Manushree Buyya', 'bio': 'Demo and Presentation Lead', 'image': 'https://avatars.githubusercontent.com/u/125701544'},
+            {'name': 'Pravallika Bollavaram', 'bio': 'Configuration Management Lead', 'image': 'https://avatars.githubusercontent.com/u/52188835'},
         ]
 
         response = self.client.get('/about/')

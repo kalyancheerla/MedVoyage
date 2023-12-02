@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 
-NavBar_Fields = ["MedVoyage", "About", "Contact", "Login/Signup"]
+NavBar_Fields = ["MedVoyage", "About", "Contact"]
 
 class ResetPasswordTestCases(TestCase):
     def setUp(self):
@@ -26,11 +26,11 @@ class ResetPasswordTestCases(TestCase):
             'password': 'idk',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/client_dashboard/')
+        self.assertEqual(response.url, '/doctor_dashboard/')
 
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link">Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/signout/')
@@ -51,11 +51,11 @@ class ResetPasswordTestCases(TestCase):
             'password': 'pass1234',
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/client_dashboard/')
+        self.assertEqual(response.url, '/doctor_dashboard/')
 
         response = self.client.get(response.url)
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link">Sign Out</a>']:
             self.assertContains(response, nav_field)
 
         response = self.client.get('/signout/')
@@ -69,7 +69,7 @@ class ResetPasswordTestCases(TestCase):
         # title
         self.assertContains(response, "MedVoyage | Login")
         # nav fields
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
         # footer
         self.assertContains(response, "<p>&copy; MedVoyage</p>")
@@ -80,10 +80,10 @@ class ResetPasswordTestCases(TestCase):
         self.assertContains(response, '<input type="text" class="form-control form-control-lg" id="id_username" name="username" placeholder="JohnDoe">')
         self.assertContains(response, '<label for="id_password">New Password</label>')
         self.assertContains(response, '<input type="password" class="form-control form-control-lg" id="id_password" name="new_password" placeholder="Enter your new password">')
-        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center">Reset</button>')
+        self.assertContains(response, '<button type="submit" class="btn btn-primary btn-block text-center btn-mv-green">Reset</button>')
         # links
-        self.assertContains(response, '<a href="/signup/">Don\'t have an account? Sign Up Here</a>')
-        self.assertNotContains(response, '<a href="/reset_password/">Forgot Password? Reset Here</a>')
+        self.assertContains(response, '<a class="text-mv-green" href="/signup/">Don\'t have an account? Sign Up Here</a>')
+        self.assertNotContains(response, '<a class="text-mv-green" href="/reset_password/">Forgot Password? Reset Here</a>')
 
     def test_resetpassword_wrong_secquestion(self):
         # signup login signout
@@ -117,7 +117,7 @@ class ResetPasswordTestCases(TestCase):
 
         response = self.client.get('/home/')
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
 
     def test_resetpassword_wrong_userid(self):
@@ -152,7 +152,7 @@ class ResetPasswordTestCases(TestCase):
 
         response = self.client.get('/home/')
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields:
+        for nav_field in NavBar_Fields + ["Login/Signup"]:
             self.assertContains(response, nav_field)
 
     def test_resetpassword_short_success(self):
@@ -189,5 +189,5 @@ class ResetPasswordTestCases(TestCase):
 
         response = self.client.get('/home/')
         self.assertEqual(response.status_code, 200)
-        for nav_field in NavBar_Fields + ['<a href="/signout" class="nav-link" > Sign Out</a>']:
+        for nav_field in NavBar_Fields + ['<a href="/signout/" class="nav-link">Sign Out</a>']:
             self.assertContains(response, nav_field)

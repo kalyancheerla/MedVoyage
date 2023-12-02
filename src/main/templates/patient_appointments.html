@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Patient Appointments{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5">
+  <div class="container">
+    <h1>Welcome to your Patient Appointments List</h1>
+    <p>
+        View your previous and upcoming appointments here!
+    </p>
+    <ul> 
+    <p> <b>Upcoming Appointments </b>
+    {% for appointment in upcoming_appointments %}
+    <li>{{appointment.appointment_id}}- {{appointment.patient.user.username}} - {{appointment.date}} - {{appointment.time}} - {{appointment.doctor.user.username}} </li>
+
+    {% endfor %} 
+    {% if not upcoming_appointments %} 
+       <p> No Upcoming Appointments </p>
+
+    {% endif %}
+    </p>
+    <p> <b> Past Appointments</b></p>
+    {% for appointment in past_appointments %}
+    <li>{{appointment.appointment_id}}- {{appointment.patient.user.username}} - {{appointment.date}} - {{appointment.time}} - {{appointment.doctor.user.username}} </li>
+
+    {% endfor %}
+</ul>
+  </div>
+</section>
+
+
+{% endblock %}

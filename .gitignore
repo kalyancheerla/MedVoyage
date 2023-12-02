@@ -2,5 +2,6 @@ __pycache__/
 .DS_Store
 .env
 *.sqlite3
-**/migrations/000**.py
-venv/**
+**/migrations/0**.py
+venv/
+.vscode/

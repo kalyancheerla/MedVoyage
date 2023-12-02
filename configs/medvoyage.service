@@ -1,0 +1,13 @@
+[Unit]
+Description=MedVoyage daemon
+After=network.target
+
+[Service]
+User=daemon
+Group=daemon
+WorkingDirectory=/home/username/MedVoyage/src/
+ExecStart=/home/username/MedVoyage/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 medvoyage.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
