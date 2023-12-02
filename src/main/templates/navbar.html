@@ -49,10 +49,16 @@
                     <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
                 </li>
             {% endif %}
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a href="{% url 'patient_appointments' %}" class="nav-link">Patient Appointments</a>
-            </li>
+            {% if user.is_authenticated %} 
+                {% if user.is_patient %}
+                <li class="nav-item">
+                    <a href="{% url 'patient_appointments' %}" class="nav-link">Patient Appointments</a>
+                </li>
+                {% elif user.is_doctor %}
+                <li class="nav-item">
+                    <a href="{% url 'view_schedule' %}" class="nav-link">View Schedule</a>
+                </li>
+                {% endif %}
             <li class="nav-item">
                 <a href="{% url 'signout' %}" class="nav-link">Sign Out</a>
             </li>
