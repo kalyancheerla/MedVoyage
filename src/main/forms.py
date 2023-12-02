@@ -38,18 +38,10 @@ class LoginForm(forms.Form):
 class VerificationForm(forms.Form):
     verification = forms.CharField()
 
-class VerificationForm(forms.Form):
-    verification = forms.CharField()
-
 class ResetPasswordForm(forms.Form):
     username = forms.CharField()
     security_question = forms.CharField()
     new_password = forms.CharField()
-
-class BookAppointmentForm(forms.ModelForm):
-    class Meta:
-        model = Appointments
-        fields = ('date', 'time', 'details')
 
 class UpdatePatientForm(forms.ModelForm):
     class Meta:
@@ -110,3 +102,8 @@ class AppointmentForm(forms.ModelForm):
                 self.fields['time_slot'].choices = time_choices
             except (ValueError, TypeError):
                 self.fields['time_slot'].choices = []
+
+class CancelAppointmentForm(forms.ModelForm):
+    class Meta:
+        model = models.Appointments
+        fields = ('appointment_id', )
