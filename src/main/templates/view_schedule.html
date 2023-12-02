@@ -12,7 +12,7 @@
             <div class="card-body text-center">
                 <h5 class="card-title">{{ appointment.appointment_date }}</h5>
                 <p class="card-text">{{ appointment.start_time }}</p>
-                <!-- <p class="card-text">{{ appointment.patient }}</p> -->
+                <p class="card-text">{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</p>
                 <p class="card-text">{{ appointment.details }}</p>
               </div>
             {% endfor %}
