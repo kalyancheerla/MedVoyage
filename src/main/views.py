@@ -12,7 +12,7 @@ from django.forms import formset_factory
 from django.utils.dateparse import parse_time
 from django.core.mail import send_mail
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
-from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm, CancelAppointmentForm
+from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm, CancelAppointmentForm, DoctorAppointmentViewForm
 from .forms import TimeSlotForm
 from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
 
@@ -328,11 +328,11 @@ def cancel_appointment(request):
 
 def view_schedule(request):
     if request.method == 'POST':
-        form = DoctorAppointments(request.POST)
+        form = DoctorAppointmentViewForm(request.POST)
         if form.is_valid():
-            date = form.cleaned_data['date']
-            appointments = Appointments.objects.filter(date=date)
+            appointment_date = form.cleaned_data['appointment_date']
+            appointments = Appointments.objects.filter(appointment_date=appointment_date)
             return render (request, 'view_schedule.html',  {'appointments': appointments})
     else:
-        form = DoctorAppointments()
+        form = DoctorAppointmentViewForm()
     return render (request, 'view_schedule.html', {'form': form})

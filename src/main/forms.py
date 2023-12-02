@@ -107,3 +107,12 @@ class CancelAppointmentForm(forms.ModelForm):
     class Meta:
         model = models.Appointments
         fields = ('appointment_id', )
+
+class DoctorAppointmentViewForm(forms.ModelForm):
+	class Meta:
+		model = models.Appointments
+		fields =('appointment_date', )
+        # fix date widget
+		widgets = {
+            'appointment_date': DateInput(),
+        }

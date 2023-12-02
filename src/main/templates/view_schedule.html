@@ -10,8 +10,9 @@
             {{ form.as_p }}
             {% for appointment in appointments %}
             <div class="card-body text-center">
-                <h5 class="card-title">{{ appointment.date }}</h5>
-                <p class="card-text">{{ appointment.time }}</p>
+                <h5 class="card-title">{{ appointment.appointment_date }}</h5>
+                <p class="card-text">{{ appointment.start_time }}</p>
+                <!-- <p class="card-text">{{ appointment.patient }}</p> -->
                 <p class="card-text">{{ appointment.details }}</p>
               </div>
             {% endfor %}
