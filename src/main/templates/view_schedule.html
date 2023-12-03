@@ -7,16 +7,52 @@
         <h3>Select the date you'd like to see appointments for:</h3>
         <form action="{% url 'view_schedule' %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            {% for appointment in appointments %}
-            <div class="card-body text-center">
-                <h5 class="card-title">{{ appointment.appointment_date }}</h5>
-                <p class="card-text">{{ appointment.start_time }}</p>
-                <p class="card-text">{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</p>
-                <p class="card-text">{{ appointment.details }}</p>
-              </div>
-            {% endfor %}
+            <label for="id_appointment_date">Select Date:</label>
+            <input type="date" id="id_appointment_date" name="appointment_date" required>
             <input type="submit" value="View" />
+            {% for appointment in appointments %}
+            <style>
+                /* Custom styles for a table with 90% width and horizontal padding */
+                .custom-table {
+                    width: 90%;
+                    margin: 20px auto;
+                }
+            
+                .custom-table th, .custom-table td {
+                    padding: 10px;
+                }
+            
+                /* Adjust the width of the Details column */
+                .custom-details {
+                    width: 65%;
+                }
+
+                .custom-name {
+                    width: 18%;
+                }
+            </style>
+            <table class="custom-table table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th class="custom-name">Patient Name</th>
+                        <th class="custom-details">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment.appointment_date }}</td>
+                            <td>{{ appointment.start_time }}</td>
+                            <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+                            <td class="wider-details">{{ appointment.details }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            {% endfor %}
         </form>
     </div>
 {% endblock %}
