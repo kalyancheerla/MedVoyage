@@ -149,8 +149,8 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login/'  # Replace with the name of your login URL pattern
-LOGIN_REDIRECT_URL = '/'  # Replace with your desired redirect URL after login
+LOGIN_URL = '/login/'  # Replace with the name of your login URL pattern
+LOGIN_REDIRECT_URL = '/home/'  # Replace with your desired redirect URL after login
 
 
 # Email setup
