@@ -57,6 +57,7 @@ class AvailableSlot(models.Model):
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
+    unavailable_flag = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.date} {self.start_time} - {self.end_time}"

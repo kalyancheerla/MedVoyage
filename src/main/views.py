@@ -271,15 +271,33 @@ def book_appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
+            doctor_id = form.cleaned_data['doctor']
+            appointment_date = form.cleaned_data['appointment_date']
             time_slot = form.cleaned_data['time_slot']
             start_time_str, end_time_str = time_slot.split(' - ')
+
+            # Fetch the corresponding AvailableSlot instance
+            start_time = parse_time(start_time_str)
+            end_time = parse_time(end_time_str)
+            available_slot = AvailableSlot.objects.get(
+                doctor_id=doctor_id,
+                start_time=start_time,
+                end_time=end_time,
+                date=appointment_date
+            )
+
+            # Update the AvailableSlot to mark it as unavailable
+            available_slot.unavailable_flag = True
+            available_slot.save()
+
+            # Create and save the appointment
             appointment = form.save(commit=False)
-            # Set the patient to the current user
             appointment.patient = PatientProfile.objects.get(user=request.user)
-            appointment.start_time = parse_time(start_time_str)
-            appointment.end_time = parse_time(end_time_str)
+            appointment.start_time = start_time
+            appointment.end_time = end_time
             appointment.booked_date = datetime.datetime.now()
             appointment.save()
+
             return redirect('client_dashboard')  # Redirect to a confirmation or success page
     else:
         form = AppointmentForm()
@@ -292,7 +310,7 @@ def get_doctor_availability_hours(request):
     date = request.GET.get('date')
     if doctor_id == '' or date == '':
         return JsonResponse({})
-    time_slots = AvailableSlot.objects.filter(doctor_id=doctor_id, date=date)
+    time_slots = AvailableSlot.objects.filter(doctor_id=doctor_id, date=date, unavailable_flag=False)
     time_values = []
     for time_slot in time_slots:
         time_values.append([str(time_slot.start_time), str(time_slot.end_time)])
