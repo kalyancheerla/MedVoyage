@@ -39,7 +39,7 @@ def user_login(request):
                     else:
                         return redirect('client_dashboard')
                 else:
-                    # If the user is not verified, send a verification code to the user's phone number                    
+                    # If the user is not verified, send a verification code to the user's phone number
                     phone_number = getattr(user, 'phone')
                     request.session['phone_number'] = phone_number
                     request.session['username'] = username
@@ -167,7 +167,7 @@ def update_patient_info(request):
         form = UpdatePatientForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(client_profile)  
+            return redirect(client_profile)
     else:
        form = UpdatePatientForm(instance=request.user)
     return render(request, 'clientupdateform.html')
@@ -186,7 +186,7 @@ def update_doctor_info(request):
         form = UpdateDoctorForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(doctor_profile)  
+            return redirect(doctor_profile)
     else:
        form = UpdateDoctorForm(instance=request.user)
     return render(request, 'update_doctor_info.html')
@@ -198,7 +198,7 @@ def patient_appointments(request):
     appointments = Appointments.objects.all()
     past_appointments = []
     upcoming_appointments = []
-    for appointment in appointments: 
+    for appointment in appointments:
         if appointment.patient.user.id == request.user.id:
             if appointment.appointment_date >= datetime.date.today():
                 upcoming_appointments.append(appointment)
@@ -280,7 +280,7 @@ def book_appointment(request):
             appointment.end_time = parse_time(end_time_str)
             appointment.booked_date = datetime.datetime.now()
             appointment.save()
-            return redirect('home')  # Redirect to a confirmation or success page
+            return redirect('client_dashboard')  # Redirect to a confirmation or success page
     else:
         form = AppointmentForm()
 
@@ -290,6 +290,8 @@ def book_appointment(request):
 def get_doctor_availability_hours(request):
     doctor_id = request.GET.get('doctor_id')
     date = request.GET.get('date')
+    if doctor_id == '' or date == '':
+        return JsonResponse({})
     time_slots = AvailableSlot.objects.filter(doctor_id=doctor_id, date=date)
     time_values = []
     for time_slot in time_slots:
