@@ -12,15 +12,15 @@ class PatientUpcomingAndPastAppointmentsTestCases(TestCase):
             'email': 'pspk@yahoo.com',
             'phone': '9999999999',
             'security_question': 'Sector 401, Underworld, Mars, Milkyway',
-            'password': 'idk',
-            'password2': 'idk',
+            'password': '#idkidk0',
+            'password2': '#idkidk0',
             'login_type': 'doctor',
         })
         self.assertEqual(response.status_code, 302)
 
         response = self.client.post('/login/', data={
             'username': 'pspk',
-            'password': 'idk',
+            'password': '#idkidk0',
         })
         self.assertEqual(response.status_code, 302)
         response = self.client.get('/client_appointments/')
@@ -34,14 +34,14 @@ class PatientUpcomingAndPastAppointmentsTestCases(TestCase):
             'email': 'pspk@yahoo.com',
             'phone': '9999999999',
             'security_question': 'Sector 401, Underworld, Mars, Milkyway',
-            'password': 'idk',
-            'password2': 'idk',
+            'password': '#idkidk0',
+            'password2': '#idkidk0',
             'login_type': 'doctor',
         })
         self.assertEqual(response.status_code, 302)
         response = self.client.post('/login/', data={
             'username': 'pspk',
-            'password': 'idk',
+            'password': '#idkidk0',
         })
         self.assertEqual(response.status_code, 302)
         response = self.client.get('/home/')
@@ -61,14 +61,14 @@ class PatientUpcomingAndPastAppointmentsTestCases(TestCase):
             'email': 'pspk@yahoo.com',
             'phone': '9999999999',
             'security_question': 'Sector 401, Underworld, Mars, Milkyway',
-            'password': 'idk',
-            'password2': 'idk',
+            'password': '#idkidk0',
+            'password2': '#idkidk0',
             'login_type': 'doctor',
         })
         self.assertEqual(response.status_code, 302)
         response = self.client.post('/login/', data={
             'username': 'pspk',
-            'password': 'idk',
+            'password': '#idkidk0',
         })
         self.assertEqual(response.status_code, 302)
         response = self.client.get('/client_appointments/')
