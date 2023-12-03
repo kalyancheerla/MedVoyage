@@ -16,6 +16,19 @@ from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm
 from .forms import TimeSlotForm
 from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
 
+def trigger_email(name, email, subject, message):
+    try:
+        # Send an email to the user
+        sub = f'DoNotReply | {subject}'
+        body = f'Hi {name},\n\n'
+        body += message
+        body += '\n\nRegards,\nMedVoyage Service Team.'
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [email]
+        send_mail(sub, body, email_from, recipient_list)
+    except:
+        pass
+
 def home(request):
     return render(request, "index.html")
 
@@ -114,6 +127,11 @@ def signup(request):
                 DoctorProfile.objects.create(user=user)
             elif user.is_patient:
                 PatientProfile.objects.create(user=user)
+
+            trigger_email(user.first_name, user.email,
+                          'Sign-Up Confirmation',
+                          'Thanks for registering on MedVoyage.')
+
             return redirect('/')
     else:
         form = SignupForm()
@@ -137,14 +155,9 @@ def contact_us(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-        try:
-            send_mail(f'DoNotReply | {name} dropped a message on MedVoyage Contact Us',
-                    f'Hi {name},\n\nWe had received your below message and our team would contact you soon...\n\n'\
-                    f'"{message}"\n\nRegards,\nMedVoyage Service Team.',
-                    settings.EMAIL_HOST_USER,
-                    [email])
-        except:
-            pass
+        trigger_email(name, email,
+                          f'{name} dropped a message on MedVoyage Contact Us',
+                          f'We had received your below message and our team would contact you soon...\n\n"{message}"')
         return redirect('contact_us')
     return render(request,"contact_us.html")
 
@@ -297,6 +310,11 @@ def book_appointment(request):
             appointment.end_time = end_time
             appointment.booked_date = datetime.datetime.now()
             appointment.save()
+
+            # email notification
+            trigger_email(request.user.first_name, request.user.email,
+                          f'Appointment Confirmation',
+                          f'Your appointment has been successfully booked.')
 
             return redirect('client_dashboard')  # Redirect to a confirmation or success page
     else:
