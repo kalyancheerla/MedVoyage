@@ -49,7 +49,7 @@
                     <a href="{% url 'user_login' %}" class="nav-link fw-bold text-mv-green">Login/Signup</a>
                 </li>
             {% endif %}
-            {% if user.is_authenticated %} 
+            {% if user.is_authenticated %}
                 {% if user.is_doctor %}
                 <li class="nav-item">
                     <a href="{% url 'view_schedule' %}" class="nav-link">View Schedule</a>
