@@ -35,5 +35,5 @@ class ContactUsTestCases(TestCase):
         #footer
         self.assertContains(response, "&copy; MedVoyage")
         #content
-        self.assertContains(response, '<h1 class="display-2 display-md-3 display-lg-4" style="color: #333;font-weight: bold;">Welcome to your Dashboard</h1>')
+        self.assertContains(response, f'Welcome to your Dashboard, {response.context["user"].first_name} {response.context["user"].last_name}!')
 
