@@ -11,7 +11,6 @@ urlpatterns = [
     path("contact/", views.contact_us, name="contact_us"),
     path("signout/", views.signout, name="signout"),
     path("reset_password/", views.reset_password, name='reset_password'),
-    path("book_appointment/", views.book_appointment, name='book_appointment'),
     path("client_dashboard/",views.client_dashboard, name='client_dashboard'),
     path('client_profile/', views.client_profile, name='client_profile'),
     path('client_update/', views.update_patient_info, name='update_patient_info'),
@@ -26,7 +25,7 @@ urlpatterns = [
     path('slots/delete/<int:slot_id>/', views.delete_slot, name='delete_slot'),
     path('book-appointment/', views.book_appointment, name='book_appointment'),
     path('get-doctor-availability-hours/', views.get_doctor_availability_hours, name='get_doctor_availability_hours'),
-
     path("cancel_appointment/", views.cancel_appointment, name='cancel_appointment'),
     path("view_schedule/", views.view_schedule, name='view_schedule'),
+
 ]

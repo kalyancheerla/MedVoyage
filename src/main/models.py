@@ -49,9 +49,6 @@ class Appointments(models.Model):
     end_time = models.TimeField()
     details = models.TextField(blank=True, null=True)
 
-    # def __str__(self):
-    #     return f"Appointment {self.appointment_id} - {self.doctor.user.username} with {self.patient.user.username} on {self.date} at {self.time}"
-
     def __str__(self):
         return f"Appointment {self.appointment_id} - {self.doctor.user.username} with {self.patient.user.username} on {self.appointment_date} at {self.start_time}"
 
