@@ -344,11 +344,9 @@ def cancel_appointment(request):
         form = CancelAppointmentForm(request.POST)
         if form.is_valid():
             appointment_value = request.POST.get('appointment_id')
-            print("Appointment POST Value:", appointment_value)
 
             try:
                 appointment = Appointments.objects.get(appointment_id=appointment_value)
-                print("Appointment:", appointment)
                 appointment.delete()
                 success_message = "Appointment successfully canceled."
 
