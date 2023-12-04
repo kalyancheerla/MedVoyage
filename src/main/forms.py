@@ -1,3 +1,4 @@
+import re
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy
@@ -25,11 +26,24 @@ class SignupForm(forms.ModelForm):
             user.save()
         return user
 
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone and not re.match(r'^\+?1?(\d{10}|\d{3}-\d{3}-\d{4})$', phone):
+            raise ValidationError("Required phonenumber format: '+15555555555' or '5555555555' or '555-555-5555'")
+        return phone
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if len(password) < 8 and not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).+$', password):
+            raise ValidationError("Required Password format: min 8 chars with at least 1 small, capital, number, and special-char each")
+        return password
+
     def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
+        password = self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password2')
+        if password != password2:
             raise forms.ValidationError('Passwords don\'t match.')
-        return cd['password2']
+        return password2
 
 class LoginForm(forms.Form):
     username = forms.CharField()

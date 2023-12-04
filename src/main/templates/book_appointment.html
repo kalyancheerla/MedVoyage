@@ -3,16 +3,85 @@
 {% block title %}Book Appointment{% endblock %}
 
 {% block content %}
-  <h2>Book an Appointment</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Book Appointment</button>
-  </form>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-8">
+      <h2 class="mb-4">Book an Appointment</h2>
+      <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+          {{ form.appointment_date.label_tag }}
+          {{ form.appointment_date }}
+          <div class="invalid-feedback">
+            {{ form.appointment_date.errors }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="id_doctor" class="form-label">{{ form.doctor.label }}</label>
+          <select name="{{ form.doctor.html_name }}" required id="id_doctor" class="form-select">
+            <option value="" selected>Select Doctor</option>
+            {% for doctor in form.doctor.field.queryset %}
+              <option value="{{ doctor.pk }}">{{ doctor }}</option>
+            {% endfor %}
+          </select>
+          <div class="invalid-feedback">
+            {{ form.doctor.errors }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="id_time_slot" class="form-label">{{ form.time_slot.label }}</label>
+          <select name="{{ form.time_slot.html_name }}" id="id_time_slot" class="form-select">
+            <option value="" selected>Select Time Slot</Select></option>
+          </select>
+          <div class="invalid-feedback">
+            {{ form.time_slot.errors }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="id_details" class="form-label">{{ form.details.label }}</label>
+          <textarea name="{{ form.details.html_name }}" cols="40" rows="10" id="id_details" class="form-control">{{ form.details.value|default:'' }}</textarea>
+          <div class="invalid-feedback">
+            {{ form.details.errors }}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-mv-green">Book Appointment</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript to handle dynamic update of time slots
+document.getElementById('id_doctor').addEventListener('change', function() {
+    // Add AJAX call here to update time_slot based on selected doctor
+});
+
+document.getElementById('id_appointment_date').addEventListener('change', function() {
+    // Add AJAX call here to update time_slot based on selected date
+});
+</script>
+
 {% endblock %}
 
 {% block javascript %}
 <script>
+  document.getElementById('id_appointment_date').addEventListener('change', function() {
+    var doctorSelect = document.getElementById('id_doctor');
+    doctorSelect.selectedIndex = 0;
+
+    var timeSlotSelect = document.getElementById('id_time_slot');
+    timeSlotSelect.innerHTML = '';
+
+    var defaultOption = document.createElement('option');
+    defaultOption.textContent = 'Select Time Slot';
+    defaultOption.value = '';
+    timeSlotSelect.appendChild(defaultOption);
+  });
+
   document.getElementById("id_doctor").addEventListener("change", function() {
       var doctorId = this.value;
       var date = document.getElementById("id_appointment_date").value;
@@ -42,5 +111,5 @@
             })
             .catch(error => console.error('Error:', error));
   });
-</script>  
+</script>
 {% endblock %}

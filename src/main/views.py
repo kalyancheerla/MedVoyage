@@ -16,6 +16,19 @@ from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm, CancelAp
 from .forms import TimeSlotForm
 from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
 
+def trigger_email(name, email, subject, message):
+    try:
+        # Send an email to the user
+        sub = f'DoNotReply | {subject}'
+        body = f'Hi {name},\n\n'
+        body += message
+        body += '\n\nRegards,\nMedVoyage Service Team.'
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [email]
+        send_mail(sub, body, email_from, recipient_list)
+    except:
+        pass
+
 def home(request):
     return render(request, "index.html")
 
@@ -39,7 +52,7 @@ def user_login(request):
                     else:
                         return redirect('client_dashboard')
                 else:
-                    # If the user is not verified, send a verification code to the user's phone number                    
+                    # If the user is not verified, send a verification code to the user's phone number
                     phone_number = getattr(user, 'phone')
                     request.session['phone_number'] = phone_number
                     request.session['username'] = username
@@ -114,6 +127,11 @@ def signup(request):
                 DoctorProfile.objects.create(user=user)
             elif user.is_patient:
                 PatientProfile.objects.create(user=user)
+
+            trigger_email(user.first_name, user.email,
+                          'Sign-Up Confirmation',
+                          'Thanks for registering on MedVoyage.')
+
             return redirect('/')
     else:
         form = SignupForm()
@@ -137,14 +155,9 @@ def contact_us(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-        try:
-            send_mail(f'DoNotReply | {name} dropped a message on MedVoyage Contact Us',
-                    f'Hi {name},\n\nWe had received your below message and our team would contact you soon...\n\n'\
-                    f'"{message}"\n\nRegards,\nMedVoyage Service Team.',
-                    settings.EMAIL_HOST_USER,
-                    [email])
-        except:
-            pass
+        trigger_email(name, email,
+                          f'{name} dropped a message on MedVoyage Contact Us',
+                          f'We had received your below message and our team would contact you soon...\n\n"{message}"')
         return redirect('contact_us')
     return render(request,"contact_us.html")
 
@@ -167,7 +180,7 @@ def update_patient_info(request):
         form = UpdatePatientForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(client_profile)  
+            return redirect(client_profile)
     else:
        form = UpdatePatientForm(instance=request.user)
     return render(request, 'clientupdateform.html')
@@ -186,7 +199,7 @@ def update_doctor_info(request):
         form = UpdateDoctorForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(doctor_profile)  
+            return redirect(doctor_profile)
     else:
        form = UpdateDoctorForm(instance=request.user)
     return render(request, 'update_doctor_info.html')
@@ -198,7 +211,7 @@ def patient_appointments(request):
     appointments = Appointments.objects.all()
     past_appointments = []
     upcoming_appointments = []
-    for appointment in appointments: 
+    for appointment in appointments:
         if appointment.patient.user.id == request.user.id:
             if appointment.appointment_date >= datetime.date.today():
                 upcoming_appointments.append(appointment)
@@ -271,16 +284,39 @@ def book_appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
+            doctor_id = form.cleaned_data['doctor']
+            appointment_date = form.cleaned_data['appointment_date']
             time_slot = form.cleaned_data['time_slot']
             start_time_str, end_time_str = time_slot.split(' - ')
+
+            # Fetch the corresponding AvailableSlot instance
+            start_time = parse_time(start_time_str)
+            end_time = parse_time(end_time_str)
+            available_slot = AvailableSlot.objects.get(
+                doctor_id=doctor_id,
+                start_time=start_time,
+                end_time=end_time,
+                date=appointment_date
+            )
+
+            # Update the AvailableSlot to mark it as unavailable
+            available_slot.unavailable_flag = True
+            available_slot.save()
+
+            # Create and save the appointment
             appointment = form.save(commit=False)
-            # Set the patient to the current user
             appointment.patient = PatientProfile.objects.get(user=request.user)
-            appointment.start_time = parse_time(start_time_str)
-            appointment.end_time = parse_time(end_time_str)
+            appointment.start_time = start_time
+            appointment.end_time = end_time
             appointment.booked_date = datetime.datetime.now()
             appointment.save()
-            return redirect('home')  # Redirect to a confirmation or success page
+
+            # email notification
+            trigger_email(request.user.first_name, request.user.email,
+                          f'Appointment Confirmation',
+                          f'Your appointment has been successfully booked.')
+
+            return redirect('client_dashboard')  # Redirect to a confirmation or success page
     else:
         form = AppointmentForm()
 
@@ -290,7 +326,9 @@ def book_appointment(request):
 def get_doctor_availability_hours(request):
     doctor_id = request.GET.get('doctor_id')
     date = request.GET.get('date')
-    time_slots = AvailableSlot.objects.filter(doctor_id=doctor_id, date=date)
+    if doctor_id == '' or date == '':
+        return JsonResponse({})
+    time_slots = AvailableSlot.objects.filter(doctor_id=doctor_id, date=date, unavailable_flag=False)
     time_values = []
     for time_slot in time_slots:
         time_values.append([str(time_slot.start_time), str(time_slot.end_time)])
