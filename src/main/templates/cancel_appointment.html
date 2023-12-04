@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}MedVoyage | Cancel Appointment{% endblock %}
+{% block title %}Cancel Appointment{% endblock %}
 
 {% block content %}
     <div class="p-4">
@@ -15,7 +15,7 @@
             <h2>Cancel an Appointment</h2>
             <div class="form-group ">
                 <label for="id_appointment" class="m-1">Select the appointment you want to cancel</label>
-            
+
                 <select name="appointment_id">
                     {% if appointments %}
                         {% for appointment in appointments %}
@@ -28,7 +28,7 @@
                     {% endif %}
                 </select>
             </div>
-            
+
             <button type="submit" class="btn btn-mv-green btn-block text-center mt-2 text-white">Cancel Appointment</button>
         </form>
 
@@ -38,16 +38,16 @@
                 width: 50%;
                 margin: 20px auto;
             }
-        
+
             .custom-table th, .custom-table td {
                 padding: 15px;
             }
-        
+
             .custom-table th:first-child {
                 font-size: 18px;
             }
         </style>
-        
+
         <table class="custom-table table table-bordered table-striped">
             <thead>
                 <tr>
@@ -67,7 +67,7 @@
                         </tr>
                     {% endif %}
                 {% endfor %}
-            </tbody>            
+            </tbody>
         </table>
     </div>
 {% endblock %}
