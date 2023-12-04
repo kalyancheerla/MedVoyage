@@ -12,7 +12,7 @@ from django.forms import formset_factory
 from django.utils.dateparse import parse_time
 from django.core.mail import send_mail
 from .forms import SignupForm, LoginForm, ResetPasswordForm, UpdatePatientForm
-from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm
+from .forms import VerificationForm, UpdateDoctorForm, AppointmentForm, CancelAppointmentForm, DoctorAppointmentViewForm
 from .forms import TimeSlotForm
 from .models import DoctorProfile, PatientProfile, Appointments, AvailableSlot
 
@@ -333,3 +333,58 @@ def get_doctor_availability_hours(request):
     for time_slot in time_slots:
         time_values.append([str(time_slot.start_time), str(time_slot.end_time)])
     return JsonResponse({str(date): time_values})
+
+@login_required
+def cancel_appointment(request):
+    error_message = None
+    success_message = None
+    appointments = None
+
+    if request.method == 'POST':
+        form = CancelAppointmentForm(request.POST)
+        if form.is_valid():
+            appointment_value = request.POST.get('appointment_id')
+
+            try:
+                appointment = Appointments.objects.get(appointment_id=appointment_value)
+                appointment.delete()
+                success_message = "Appointment successfully canceled."
+
+                # Fetch the corresponding AvailableSlot instance
+                available_slot = AvailableSlot.objects.get(
+                    doctor_id=appointment.doctor_id,
+                    start_time=appointment.start_time,
+                    end_time=appointment.end_time,
+                    date=appointment.appointment_date,
+                    unavailable_flag=True,
+                )
+                # Update the AvailableSlot to mark it as available
+                available_slot.unavailable_flag = False
+                available_slot.save()
+            except Appointments.DoesNotExist or ValueError:
+                error_message = "Appointment not found. Please enter a valid appointment ID."
+
+            # Update the list of appointments after deletion
+            appointments = Appointments.objects.all()
+    else:
+        form = CancelAppointmentForm()
+        appointments = Appointments.objects.all()
+
+    return render(request, 'cancel_appointment.html', {
+        'form': form,
+        'error_message': error_message,
+        'success_message': success_message,
+        'appointments': appointments,
+    })
+
+@login_required
+def view_schedule(request):
+    if request.method == 'POST':
+        form = DoctorAppointmentViewForm(request.POST)
+        if form.is_valid():
+            appointment_date = form.cleaned_data['appointment_date']
+            appointments = Appointments.objects.filter(appointment_date=appointment_date)
+            return render (request, 'view_schedule.html',  {'appointments': appointments})
+    else:
+        form = DoctorAppointmentViewForm()
+    return render (request, 'view_schedule.html', {'form': form})

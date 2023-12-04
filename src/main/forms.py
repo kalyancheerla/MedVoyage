@@ -47,7 +47,7 @@ class SignupForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     username = forms.CharField()
-    password = forms.CharField() #needs proper password/auth
+    password = forms.CharField()
 
 class VerificationForm(forms.Form):
     verification = forms.CharField()
@@ -116,3 +116,17 @@ class AppointmentForm(forms.ModelForm):
                 self.fields['time_slot'].choices = time_choices
             except (ValueError, TypeError):
                 self.fields['time_slot'].choices = []
+
+class CancelAppointmentForm(forms.ModelForm):
+    class Meta:
+        model = models.Appointments
+        fields = ('appointment_id', )
+
+class DoctorAppointmentViewForm(forms.ModelForm):
+	class Meta:
+		model = models.Appointments
+		fields =('appointment_date', )
+        # fix date widget
+		widgets = {
+            'appointment_date': DateInput(),
+        }

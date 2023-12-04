@@ -50,6 +50,11 @@
                 </li>
             {% endif %}
             {% if user.is_authenticated %}
+                {% if user.is_doctor %}
+                <li class="nav-item">
+                    <a href="{% url 'view_schedule' %}" class="nav-link">View Schedule</a>
+                </li>
+                {% endif %}
             <li class="nav-item">
                 <a href="{% url 'signout' %}" class="nav-link">Sign Out</a>
             </li>

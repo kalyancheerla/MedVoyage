@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Cancel Appointment{% endblock %}
+
+{% block content %}
+    <div class="p-4">
+        {% if error_message %}
+            <p class="text-danger">{{ error_message }}</p>
+        {% endif %}
+        {% if success_message %}
+            <p class="text-success">{{ success_message }}</p>
+        {% endif %}
+        <form action="{% url 'cancel_appointment' %}" method="post">
+            {% csrf_token %}
+            <h2>Cancel an Appointment</h2>
+            <div class="form-group ">
+                <label for="id_appointment" class="m-1">Select the appointment you want to cancel</label>
+
+                <select name="appointment_id">
+                    {% if appointments %}
+                        {% for appointment in appointments %}
+                            {% if appointment.patient.user == request.user %}
+                                <option value="{{ appointment.appointment_id }}">{{ appointment.appointment_date }} {{ appointment.start_time }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="No appointments available" disabled></option>
+                    {% endif %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-mv-green btn-block text-center mt-2 text-white">Cancel Appointment</button>
+        </form>
+
+        <h2>All Appointments:</h2>
+        <style>
+            .custom-table {
+                width: 50%;
+                margin: 20px auto;
+            }
+
+            .custom-table th, .custom-table td {
+                padding: 15px;
+            }
+
+            .custom-table th:first-child {
+                font-size: 18px;
+            }
+        </style>
+
+        <table class="custom-table table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            {% now "m-d-Y" as today %}
+            <tbody>
+                {% for appointment in appointments %}
+                    {% if appointment.patient.user == request.user and appointment.appointment_date|date:"m-d-Y" >= today %}
+                        <tr>
+                            <td>Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</td>
+                            <td>{{ appointment.appointment_date }}</td>
+                            <td>{{ appointment.start_time }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

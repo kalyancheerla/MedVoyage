@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}View Schedule{% endblock %}
+
+{% block content %}
+    <div>
+        <h3>Select the date you'd like to see appointments for:</h3>
+        <form action="{% url 'view_schedule' %}" method="post">
+            {% csrf_token %}
+            <label for="id_appointment_date">Select Date:</label>
+            <input type="date" id="id_appointment_date" name="appointment_date" required>
+            <input type="submit" value="View"/>
+            <style>
+                /* Custom styles for a table with 90% width and horizontal padding */
+                .custom-table {
+                    width: 90%;
+                    margin: 20px auto;
+                }
+
+                .custom-table th, .custom-table td {
+                    padding: 10px;
+                }
+
+                /* Adjust the width of the Details column */
+                .custom-details {
+                    width: 65%;
+                }
+
+                .custom-name {
+                    width: 18%;
+                }
+            </style>
+            <table class="custom-table table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th class="custom-name">Patient Name</th>
+                        <th class="custom-details">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment.appointment_date }}</td>
+                            <td>{{ appointment.start_time }}</td>
+                            <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+                            <td class="wider-details">{{ appointment.details }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}
