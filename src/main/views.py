@@ -314,6 +314,9 @@ def cancel_appointment(request):
                 success_message = "Appointment successfully canceled."
             except Appointments.DoesNotExist or ValueError:
                 error_message = "Appointment not found. Please enter a valid appointment ID."
+
+            # Update the list of appointments after deletion
+            appointments = Appointments.objects.all()
     else:
         form = CancelAppointmentForm()
         appointments = Appointments.objects.all()

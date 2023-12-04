@@ -8,8 +8,15 @@
         <blockquote class="blockquote">
             <h1 class="display-2 display-md-3 display-lg-4" style="color: #333;font-weight: bold;">Welcome to your Dashboard</h1>
         </blockquote>
+
+        <!-- First Button -->
         <div class="btn btn-primary btn-mv-green">
-            <a href="{% url 'book_appointment' %}" style="color: #000;">Book an Appointment</a>
+            <a href="{% url 'book_appointment' %}" class="d-block" style="color: #000;">Book an Appointment</a>
+        </div>
+
+        <!-- Second Button with Different Styling -->
+        <div class="btn btn-secondary btn-mv-green">
+            <a href="{% url 'cancel_appointment' %}" class="d-block" style="color: #000;">Cancel an Appointment</a>
         </div>
     </figure>
 </div>

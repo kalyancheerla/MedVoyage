@@ -3,7 +3,7 @@
 {% block title %}MedVoyage | Cancel Appointment{% endblock %}
 
 {% block content %}
-    <div>
+    <div class="p-4">
         {% if error_message %}
             <p class="text-danger">{{ error_message }}</p>
         {% endif %}
@@ -13,41 +13,61 @@
         <form action="{% url 'cancel_appointment' %}" method="post">
             {% csrf_token %}
             <h2>Cancel an Appointment</h2>
-            <div class="form-group">
+            <div class="form-group ">
                 <label for="id_appointment" class="m-1">Select the appointment you want to cancel</label>
-                <!-- <input type="text" class="form-control form-control-lg mb-2" id="id_appointment" name="appointment_id" placeholder="Enter appointment id here"> -->
+            
                 <select name="appointment_id">
-                {% for appointment in appointments %}
-                    {% if appointment.patient.user == request.user %}
-                    <option value="{{ appointment.appointment_id  }}">{{ appointment.appointment_date }}  {{ appointment.start_time }}</option>
+                    {% if appointments %}
+                        {% for appointment in appointments %}
+                            {% if appointment.patient.user == request.user %}
+                                <option value="{{ appointment.appointment_id }}">{{ appointment.appointment_date }} {{ appointment.start_time }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="No appointments available" disabled></option>
                     {% endif %}
-                {% endfor %}
                 </select>
             </div>
+            
             <button type="submit" class="btn btn-mv-green btn-block text-center mt-2 text-white">Cancel Appointment</button>
         </form>
 
         <h2>All Appointments:</h2>
-        <table class="table">
+        <style>
+            .custom-table {
+                width: 50%;
+                margin: 20px auto;
+            }
+        
+            .custom-table th, .custom-table td {
+                padding: 15px;
+            }
+        
+            .custom-table th:first-child {
+                font-size: 18px;
+            }
+        </style>
+        
+        <table class="custom-table table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Appointment ID</th>
+                    <th>Doctor Name</th>
                     <th>Date</th>
                     <th>Time</th>
-                    <!-- Add more columns as needed -->
                 </tr>
             </thead>
+            {% now "m-d-Y" as today %}
             <tbody>
                 {% for appointment in appointments %}
-                    {% if appointment.patient.user == request.user %}
-                    <tr>
-                        <td>{{ appointment.appointment_id }}</td>
-                        <td>{{ appointment.appointment_date }}</td>
-                        <td>{{ appointment.start_time }}</td>
-                    </tr>
+                    {% if appointment.patient.user == request.user and appointment.appointment_date|date:"m-d-Y" >= today %}
+                        <tr>
+                            <td>Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</td>
+                            <td>{{ appointment.appointment_date }}</td>
+                            <td>{{ appointment.start_time }}</td>
+                        </tr>
                     {% endif %}
                 {% endfor %}
-            </tbody>
+            </tbody>            
         </table>
     </div>
 {% endblock %}
