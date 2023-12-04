@@ -361,6 +361,9 @@ def cancel_appointment(request):
                 # Update the AvailableSlot to mark it as available
                 available_slot.unavailable_flag = False
                 available_slot.save()
+                trigger_email(user.first_name, user.email,
+                              f'Appointment Cancellation',
+                              f'Your appointment has been successfully canceled.')
             except Appointments.DoesNotExist or ValueError:
                 error_message = "Appointment not found. Please enter a valid appointment ID."
 
