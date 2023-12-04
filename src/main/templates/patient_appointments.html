@@ -14,7 +14,7 @@
     <ul> 
     <p> <b>Upcoming Appointments </b>
     {% for appointment in upcoming_appointments %}
-    <li>Appointment with <b> Dr. {{appointment.doctor.user.username}}</b> is on <i>{{appointment.appointment_date}} from {{appointment.start_time}}-{{appointment.end_time}}</i> </li>
+    <li>Appointment with <b> Dr. {{appointment.doctor.user.first_name}} {{appointment.doctor.user.last_name}}</b> is on <i>{{appointment.appointment_date}} from {{appointment.start_time}}-{{appointment.end_time}}</i> </li>
 
     {% endfor %} 
     {% if not upcoming_appointments %} 
