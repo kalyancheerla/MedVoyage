@@ -9,8 +9,7 @@
             {% csrf_token %}
             <label for="id_appointment_date">Select Date:</label>
             <input type="date" id="id_appointment_date" name="appointment_date" required>
-            <input type="submit" value="View" />
-            {% for appointment in appointments %}
+            <input type="submit" value="View"/>
             <style>
                 /* Custom styles for a table with 90% width and horizontal padding */
                 .custom-table {
@@ -51,8 +50,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-            
-            {% endfor %}
         </form>
     </div>
 {% endblock %}

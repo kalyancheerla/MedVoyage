@@ -334,6 +334,7 @@ def get_doctor_availability_hours(request):
         time_values.append([str(time_slot.start_time), str(time_slot.end_time)])
     return JsonResponse({str(date): time_values})
 
+@login_required
 def cancel_appointment(request):
     error_message = None
     success_message = None
@@ -350,6 +351,18 @@ def cancel_appointment(request):
                 print("Appointment:", appointment)
                 appointment.delete()
                 success_message = "Appointment successfully canceled."
+
+                # Fetch the corresponding AvailableSlot instance
+                available_slot = AvailableSlot.objects.get(
+                    doctor_id=appointment.doctor_id,
+                    start_time=appointment.start_time,
+                    end_time=appointment.end_time,
+                    date=appointment.appointment_date,
+                    unavailable_flag=True,
+                )
+                # Update the AvailableSlot to mark it as available
+                available_slot.unavailable_flag = False
+                available_slot.save()
             except Appointments.DoesNotExist or ValueError:
                 error_message = "Appointment not found. Please enter a valid appointment ID."
 
@@ -366,7 +379,7 @@ def cancel_appointment(request):
         'appointments': appointments,
     })
 
-
+@login_required
 def view_schedule(request):
     if request.method == 'POST':
         form = DoctorAppointmentViewForm(request.POST)
