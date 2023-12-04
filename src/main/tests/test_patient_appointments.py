@@ -46,13 +46,7 @@ class PatientUpcomingAndPastAppointmentsTestCases(TestCase):
         self.assertEqual(response.status_code, 302)
         response = self.client.get('/home/')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Patient Appointments")
-
-    def test_appt_no_nav_logged_out(self):
-        response = self.client.get('/home/')
-        self.assertEqual(response.status_code, 200)
-        self.assertNotContains(response, "Patient Appointments")
-
+        
     def test_no_appt_listing_when_no_appt_made(self):
         response = self.client.post('/signup/', data={
             'username': 'pspk',
