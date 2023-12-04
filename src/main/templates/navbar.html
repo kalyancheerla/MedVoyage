@@ -51,9 +51,6 @@
             {% endif %}
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a href="{% url 'patient_appointments' %}" class="nav-link">Patient Appointments</a>
-            </li>
-            <li class="nav-item">
                 <a href="{% url 'signout' %}" class="nav-link">Sign Out</a>
             </li>
             {% endif %}
