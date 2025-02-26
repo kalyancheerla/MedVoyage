@@ -1,5 +1,5 @@
 # Squad8 project - MedVoyage:
-Repo contains the project implementation for the Squad8 team's MedVoyage repository.
+Repo contains the project implementation for the Squad8 team's MedVoyage repository. And one can access the website at [medvoyage.kalyanch.com](https://medvoyage.kalyanch.com).
 
 ### Description:
 Helping out healthcare scheduling with our mobile-first and user-friendly Clinic Booking system, connecting patients and doctors seamlessly.
