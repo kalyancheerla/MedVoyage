@@ -6,20 +6,19 @@
 FROM python:latest
 LABEL maintainer="KalyanCheerla@my.unt.edu"
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-# Install any needed packages specified in requirements.txt
+# Install dependencies
+COPY requirements.txt /app
 RUN pip install -r requirements.txt
 
-# Execute the DB migration setup
-RUN python manage.py makemigrations && python manage.py migrate
+# Copy Django project files
+COPY . /app
+RUN chmod +x /app/entrypoint.sh
 
-# Open Port
+# Expose port
 EXPOSE 8000
 
-# Run the command to start gunicorn
-CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "medvoyage.wsgi:application"]
+# Use the entrypoint script
+ENTRYPOINT ["/app/entrypoint.sh"]
