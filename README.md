@@ -1,6 +1,8 @@
 # Squad8 project - MedVoyage:
 Repo contains the project implementation for the Squad8 team's MedVoyage repository. And one can access the website at [medvoyage.kalyanch.com](https://medvoyage.kalyanch.com).
 
+**Note:** The website at [medvoyage.kalyanch.com](https://medvoyage.kalyanch.com) has been powered down to save homelab resources. You can still clone and run this project locally and find the kubernetes configs at [./configs/k8s_configs](./configs/k8s_configs).
+
 ### Description:
 Helping out healthcare scheduling with our mobile-first and user-friendly Clinic Booking system, connecting patients and doctors seamlessly.
 
